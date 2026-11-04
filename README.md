@@ -32,9 +32,13 @@ Run `npm run check-data` after editing (checks JSON, ids, answer indexes, no em 
 1. Create a free project at https://supabase.com.
 2. **SQL Editor > New query**: paste `supabase/schema.sql`, Run. This creates the `progress` table with Row Level Security, so every user can only read and write their own row.
 3. **Authentication > Sign In / Providers**: turn off **Allow new users to sign up** (only you create accounts).
-4. **Authentication > Users > Add user > Create new user**: add the 3 users (email + password, tick **Auto Confirm User**).
+4. **Authentication > URL Configuration**: Site URL = the GitHub Pages address; add `http://localhost:5173/` to Redirect URLs for local testing.
+5. Add the users, either way:
+   - **Create new user** (email + temporary password, tick **Auto Confirm User**), send them the password, they change it with **Mainīt paroli** in the app.
+   - **Send invitation**: they get an email link, open the app and choose their own password. Supabase's built-in email only delivers to members of your Supabase organization, so for anyone else set up custom SMTP first (Authentication > Emails > SMTP Settings, e.g. a free Resend or Brevo account).
    Optional display name: in the user's raw metadata set `{"name": "Aleksis"}`, otherwise the part of the email before `@` is shown.
-5. **Project Settings > API**: copy the Project URL and the anon (or publishable) key into `.env` (see `.env.example`).
+6. Forgotten password: **Aizmirsi paroli?** on the login screen sends a reset link (same email limits as invites).
+7. **Project Settings > API**: copy the Project URL and the anon (or publishable) key into `.env` (see `.env.example`).
    These two values are public by design; the data is protected by RLS, not by hiding the key.
 
 ## Deploy to GitHub Pages (free)

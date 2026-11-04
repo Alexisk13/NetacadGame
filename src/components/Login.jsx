@@ -1,11 +1,23 @@
 import { useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { supabase, appUrl } from '../lib/supabase'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const [info, setInfo] = useState('')
+
+  const forgot = async () => {
+    setError('')
+    setInfo('')
+    if (!email.trim()) return setError('Ieraksti savu e-pastu un spied vēlreiz.')
+    setBusy(true)
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: appUrl() })
+    setBusy(false)
+    if (error) setError(error.message)
+    else setInfo('Ja šis konts eksistē, e-pastā ir saite paroles maiņai.')
+  }
 
   const submit = async (e) => {
     e.preventDefault()
@@ -31,7 +43,9 @@ export default function Login() {
           <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </label>
         {error && <div className="error">{error}</div>}
+        {info && <div className="muted small">{info}</div>}
         <button className="primary" disabled={busy}>{busy ? 'Pieslēdzas...' : 'Pieslēgties'}</button>
+        <button type="button" className="link" onClick={forgot} disabled={busy}>Aizmirsi paroli?</button>
       </form>
     </div>
   )

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { supabase, hasBackend } from './lib/supabase'
+import { supabase, hasBackend, needsPasswordFromLink } from './lib/supabase'
 import { useProgress } from './lib/store'
 import Login from './components/Login'
+import SetPassword from './components/SetPassword'
 import Home from './components/Home'
 import Study from './components/Study'
 import Tickets from './components/Tickets'
@@ -15,16 +16,29 @@ const NAV = [
 
 export default function App() {
   const [session, setSession] = useState(hasBackend ? undefined : { user: { id: 'local', email: 'lokāli' } })
+  const [choosePassword, setChoosePassword] = useState(needsPasswordFromLink)
 
   useEffect(() => {
     if (!hasBackend) return
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data } = supabase.auth.onAuthStateChange((_e, s) => setSession(s))
+    const { data } = supabase.auth.onAuthStateChange((event, s) => {
+      setSession(s)
+      if (event === 'PASSWORD_RECOVERY') setChoosePassword(true)
+    })
     return () => data.subscription.unsubscribe()
   }, [])
 
   if (session === undefined) return <div className="center muted">Ielādē...</div>
   if (!session) return <Login />
+  if (choosePassword) {
+    return (
+      <SetPassword
+        title="Izvēlies paroli"
+        intro={`Konts: ${session.user.email}. Ar šo paroli turpmāk pieslēgsies.`}
+        onDone={() => setChoosePassword(false)}
+      />
+    )
+  }
   return <Game user={session.user} />
 }
 
@@ -32,8 +46,12 @@ function Game({ user }) {
   const { progress, update, sync, reset, flush } = useProgress(user.id)
   const [screen, setScreen] = useState('home')
   const [preset, setPreset] = useState(null)
+  const [changingPassword, setChangingPassword] = useState(false)
 
   if (!progress) return <div className="center muted">Ielādē progresu...</div>
+  if (changingPassword) {
+    return <SetPassword title="Mainīt paroli" onDone={() => setChangingPassword(false)} onCancel={() => setChangingPassword(false)} />
+  }
 
   const name = user.user_metadata?.name || user.email.split('@')[0]
   const go = (id, topics = null) => {
@@ -63,6 +81,7 @@ function Game({ user }) {
         <div className="who">
           <span className={`dot ${sync}`} title={SYNC_LABEL[sync]} />
           <span className="muted">{name}</span>
+          {hasBackend && <button className="link" onClick={() => setChangingPassword(true)}>Mainīt paroli</button>}
           {hasBackend && <button className="link" onClick={logout}>Iziet</button>}
         </div>
       </header>
