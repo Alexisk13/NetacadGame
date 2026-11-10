@@ -6,9 +6,11 @@ import SetPassword from './components/SetPassword'
 import Home from './components/Home'
 import Study from './components/Study'
 import Tickets from './components/Tickets'
+import Learn from './components/Learn'
 
 const NAV = [
   { id: 'home', label: 'Sākums' },
+  { id: 'learn', label: 'Mācības' },
   { id: 'quiz', label: 'Viktorīna' },
   { id: 'cards', label: 'Kartītes' },
   { id: 'tickets', label: 'Biļetes' },
@@ -46,6 +48,8 @@ function Game({ user }) {
   const { progress, update, sync, reset, flush } = useProgress(user.id)
   const [screen, setScreen] = useState('home')
   const [preset, setPreset] = useState(null)
+  const [ticketPreset, setTicketPreset] = useState(null)
+  const [openLesson, setOpenLesson] = useState(null)
   const [changingPassword, setChangingPassword] = useState(false)
 
   if (!progress) return <div className="center muted">Ielādē progresu...</div>
@@ -54,8 +58,10 @@ function Game({ user }) {
   }
 
   const name = user.user_metadata?.name || user.email.split('@')[0]
-  const go = (id, topics = null) => {
+  const go = (id, topics = null, ticket = null) => {
     setPreset(topics)
+    setTicketPreset(ticket)
+    setOpenLesson(null)
     setScreen(id)
     window.scrollTo(0, 0)
   }
@@ -89,10 +95,11 @@ function Game({ user }) {
         <div className="banner">Lokālais režīms: progress tiek glabāts tikai šajā pārlūkā. Konti darbojas, kad ir iestatīts Supabase.</div>
       )}
       <main>
-        {screen === 'home' && <Home name={name} progress={progress} go={go} reset={reset} />}
+        {screen === 'home' && <Home name={name} progress={progress} go={go} reset={reset} openLesson={(id) => { go('learn'); setOpenLesson(id) }} />}
+        {screen === 'learn' && <Learn progress={progress} update={update} go={go} openLesson={openLesson} setOpenLesson={setOpenLesson} />}
         {screen === 'quiz' && <Study key={`q${preset}`} mode="quiz" progress={progress} update={update} preset={preset} />}
         {screen === 'cards' && <Study key={`c${preset}`} mode="cards" progress={progress} update={update} preset={preset} />}
-        {screen === 'tickets' && <Tickets progress={progress} update={update} />}
+        {screen === 'tickets' && <Tickets key={ticketPreset ?? 'list'} progress={progress} update={update} preset={ticketPreset} />}
       </main>
     </div>
   )

@@ -20,12 +20,40 @@ for (const q of quiz) {
   for (const i of q.a) if (i < 0 || i >= q.o.length) errors.push(`${q.id}: answer index ${i} out of range`)
   if (new Set(q.o).size !== q.o.length) errors.push(`${q.id}: duplicate options`)
 }
-for (const f of ['tickets.json', 'flashcards.json', 'quiz.json']) {
+// Tickets: speech data from EKSAMENA_BILETES.md.
+for (const t of tickets) {
+  if (!t.idea) errors.push(`ticket ${t.id}: no idea`)
+  if (!Array.isArray(t.plan) || t.plan.length !== 5 || t.plan.some((p) => !p.h || !p.t)) errors.push(`ticket ${t.id}: plan must have 5 { h, t }`)
+  if (!t.facts?.length) errors.push(`ticket ${t.id}: no facts`)
+  if (!t.followups?.length || t.followups.some((f) => !f.q || !f.a)) errors.push(`ticket ${t.id}: bad followups`)
+  for (const l of t.links || []) if (!topics.has(l) || l === 0) errors.push(`ticket ${t.id}: bad link ${l}`)
+}
+
+// Lessons: one per ticket, each step well formed.
+const lessons = load('lessons.json')
+const WIDGETS = ['binary', 'subnet', 'ipv6', 'encap', 'mactable', 'cli']
+for (const t of tickets) if (!lessons.some((l) => l.t === t.id)) errors.push(`ticket ${t.id}: no lesson`)
+for (const l of lessons) {
+  l.steps.forEach((s, i) => {
+    const at = `lesson ${l.t} step ${i + 1} (${s.k})`
+    const bad = (msg) => errors.push(`${at}: ${msg}`)
+    if (s.k === 'info') { if (!s.h || !(s.t || s.b || s.tbl)) bad('needs h and content') }
+    else if (s.k === 'mcq') { if (!s.q || !(s.a >= 0 && s.a < s.o?.length) || new Set(s.o).size !== s.o.length) bad('bad options/answer') }
+    else if (s.k === 'order') { if (!s.q || s.items?.length < 2 || new Set(s.items).size !== s.items.length) bad('items must be 2+ unique') }
+    else if (s.k === 'match') { if (!s.q || s.pairs?.length < 2 || new Set(s.pairs.map((p) => p[1])).size !== s.pairs.length || new Set(s.pairs.map((p) => p[0])).size !== s.pairs.length) bad('pairs must be unique on both sides') }
+    else if (s.k === 'sort') { if (!s.q || s.buckets?.length < 2 || s.items?.some(([, b]) => !(b >= 0 && b < s.buckets.length))) bad('bad bucket index') }
+    else if (s.k === 'flow') { if (!s.h || s.steps?.some((x) => !x.m || !(x.f >= 0 && x.f < s.actors.length) || !(x.to >= 0 && x.to < s.actors.length))) bad('bad actor index') }
+    else if (s.k === 'widget') { if (!WIDGETS.includes(s.w)) bad(`unknown widget ${s.w}`) }
+    else bad('unknown step type')
+  })
+}
+
+for (const f of ['tickets.json', 'flashcards.json', 'quiz.json', 'lessons.json']) {
   const text = readFileSync(new URL(`../src/data/${f}`, import.meta.url), 'utf8')
   text.split('\n').forEach((line, n) => { if (dash.test(line)) errors.push(`${f}:${n + 1}: em/en dash`) })
 }
 
-console.log(`tickets ${tickets.length}, flashcards ${cards.length}, quiz ${quiz.length}`)
+console.log(`tickets ${tickets.length}, flashcards ${cards.length}, quiz ${quiz.length}, lesson steps ${lessons.reduce((n, l) => n + l.steps.length, 0)}`)
 for (const t of topics) {
   const c = cards.filter((x) => x.t === t).length
   const q = quiz.filter((x) => x.t === t).length

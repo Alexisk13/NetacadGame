@@ -3,410 +3,1213 @@
     "id": 1,
     "title": "OSI, TCP/IP modeļi.",
     "modules": "ITN 3",
-    "plan": {
-      "ievads": "Slāņveida modeļi sadala tīkla komunikāciju slāņos, katram slānim ir savs uzdevums. OSI ir references modelis (reference model), TCP/IP ir protokolu modelis (protocol model).",
-      "darbiba": "OSI 7 slāņi no augšas: lietojumu, pasniegšanas, sesijas, transporta, tīkla, datu posma (data link), fiziskais. TCP/IP 4 slāņi: lietojumu, transporta, interneta, tīkla piekļuves. Sūtot dati iet no augšas uz leju (enkapsulācija), saņemot no apakšas uz augšu.",
-      "detalas": "TCP/IP lietojumu slānis = OSI 7+6+5, tīkla piekļuve = OSI 2+1. PDU: segments (4.), pakete (3.), rāmis (2.), biti (1.). Protokolu prasības: kodēšana, formatēšana un enkapsulācija, izmērs, laiks, piegādes iespējas. Standarti: IETF (RFC), IEEE (802.x), ICANN/IANA, TIA, EIA, ITU-T.",
-      "piemers": "Atverot vietni: HTTP (7.), TCP ports 443 (4.), IP adrese (3.), Ethernet MAC (2.), biti kabelī (1.). Komutators strādā 2. slānī, maršrutētājs 3. slānī.",
-      "nosleg": "Slāņi ļauj ražotājiem konkurēt un mainīt tehnoloģiju vienā slānī, neietekmējot citus. Saite ar 14. biļeti (enkapsulācija)."
-    },
+    "idea": "tīkla komunikāciju sadala slāņos; katrs slānis veic vienu uzdevumu un sadarbojas ar blakus slāņiem, tāpēc dažādu ražotāju iekārtas var sadarboties.",
     "facts": [
-      "Ieguvumi: palīdz protokolu izstrādē, veicina konkurenci, izmaiņas vienā slānī neietekmē citus, kopīga valoda",
-      "OSI = references modelis, TCP/IP = protokolu modelis",
-      "OSI 7 slāņi pareizā secībā ar piemēriem (All People Seem To Need Data Processing)",
-      "TCP/IP 4 slāņi un to atbilstība OSI slāņiem",
-      "PDU katrā slānī: dati, segments, pakete, rāmis, biti",
-      "TCP/IP komplekta protokoli pa slāņiem (DNS, DHCP, HTTP / TCP, UDP / IP, ICMP, OSPF / ARP, Ethernet)",
-      "Protokolu prasības: kodēšana, formatēšana un enkapsulācija, izmērs, laiks, piegādes iespējas",
-      "Laiks (timing): plūsmas kontrole, atbildes taimauts, piekļuves metode",
-      "Protokolu funkcijas: adresācija, uzticamība, plūsmas kontrole, secība (sequencing), kļūdu noteikšana",
-      "Standartu organizācijas: IETF, IEEE, ICANN/IANA, TIA, EIA, ITU-T"
+      "OSI = 7 slāņi (atsauces modelis, ISO), TCP/IP = 4 slāņi (protokolu modelis, \"Internet model\")",
+      "Visi 7 OSI slāņi pareizā secībā ar funkciju",
+      "TCP/IP atbilstība: Lietotnes = OSI 7+6+5; Transporta = 4; Interneta = 3; Tīkla piekļuves = 2+1",
+      "PDU: dati, segments/datagramma, pakete, kadrs, biti",
+      "Ierīces: komutators = 2. slānis (MAC), maršrutētājs = 3. slānis (IP), centrmezgls = 1. slānis",
+      "Protokolu piemēri katrā slānī (HTTP, TCP/UDP, IP/ICMP, Ethernet/802.11)",
+      "4 slāņu modeļa priekšrocības",
+      "Standartu organizācijas: IEEE, IETF (RFC), ISO, IANA"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "tīkls = daudz protokolu kopā; lai standartizētu, komunikāciju sadala slāņos. Divi modeļi: OSI (7, ISO, atsauces) un TCP/IP (4, protokolu modelis, reālais internets). 4 priekšrocības."
+      },
+      {
+        "h": "OSI no augšas",
+        "t": "katram slānim funkcija + protokols + PDU. Pateikt iegaumēšanas frāzi."
+      },
+      {
+        "h": "TCP/IP un atbilstība",
+        "t": "4 slāņi, kurš OSI slānis kur. Cisco tabula: ICMP un OSPF ir interneta slānī, ARP ir tīkla piekļuves slānī."
+      },
+      {
+        "h": "Piemērs",
+        "t": "atverot https://www.lu.lv: HTTP (7) -> TLS (6) -> TCP ports 443 (4) -> IP adrese (3) -> Ethernet kadrs ar MAC (2) -> biti UTP kabelī (1). Saņēmējs atver apgrieztā secībā."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "ierīces pa slāņiem (komutators L2, maršrutētājs L3); IoT pievieno savus modeļus; saite uz iekapsulēšanu (14)."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kurš OSI slānis atbild par maršrutēšanu?",
+        "a": "Tīkla (3)."
+      },
+      {
+        "q": "Kuri OSI slāņi veido TCP/IP lietotnes slāni?",
+        "a": "5, 6, 7."
+      },
+      {
+        "q": "Kuri divi OSI slāņi atbilst vienam TCP/IP slānim (tīkla piekļuve)?",
+        "a": "Fiziskais un datu posma."
+      },
+      {
+        "q": "Kā sauc PDU transporta slānī?",
+        "a": "Segments (TCP), datagramma (UDP)."
+      },
+      {
+        "q": "Ar ko atšķiras protokolu modelis no atsauces modeļa?",
+        "a": "Protokolu modelis atbilst reālai protokolu kopai (TCP/IP); atsauces modelis ir vispārīgs ietvars (OSI)."
+      },
+      {
+        "q": "Kurā slānī strādā ARP pēc Cisco?",
+        "a": "Tīkla piekļuves (TCP/IP)."
+      }
+    ],
+    "links": [
+      14,
+      6,
+      8,
+      11,
+      12
     ]
   },
   {
     "id": 2,
     "title": "Vītā pāra kabeļu datu pārraides vide.",
     "modules": "ITN 4",
-    "plan": {
-      "ievads": "Vītā pāra kabelis ir vara kabelis, kurā vadi savīti pa pāriem. Tā ir visizplatītākā LAN pārraides vide, jo tā ir lēta un viegli uzstādāma. Darbojas OSI 1. (fiziskajā) slānī.",
-      "darbiba": "Dati tiek pārraidīti kā elektriski signāli. Problēmas: vājināšanās (attenuation), elektromagnētiskie un radiofrekvenču traucējumi (EMI/RFI), šķērsrunas (crosstalk). Savīšana samazina šķērsrunas, ekranējums aizsargā pret EMI/RFI.",
-      "detalas": "UTP max 100 m, RJ-45 savienotājs, 8 vadi (4 pāri). Kategorijas: Cat5e 1 Gbps, Cat6 1 Gbps (10 Gbps līdz ~55 m), Cat6a 10 Gbps 100 m. T568A un T568B atšķiras ar zaļo un oranžo pāri (pini 1, 2, 3, 6).",
-      "piemers": "Dators ar komutatoru: taisnais kabelis (A-A). Divi komutatori: krustotais (A-B), bet Auto-MDIX ļauj lietot jebkuru. Cisco konsolei: rollover (konsoles) kabelis.",
-      "nosleg": "Joslas platums (bandwidth) ir kapacitāte, caurlaidspēja (throughput) ir faktiskais ātrums. Lielākiem attālumiem lieto optiku (3. biļete)."
-    },
+    "idea": "vītais pāris ir lētākā un izplatītākā vara LAN vide; vadus savij pret šķērsrunu, ekranē pret EMI/RFI, un maksimālais garums ir 100 m.",
     "facts": [
-      "Joslas platums (bandwidth), caurlaidspēja (throughput), lietderīgā caurlaidspēja (goodput), latentums",
-      "Problēmas: vājināšanās, EMI/RFI, šķērsrunas (crosstalk)",
-      "Savīšana pret šķērsrunām, ekranējums pret EMI/RFI",
-      "UTP, STP, koaksiālais kabelis (BNC, N, F savienotāji)",
-      "UTP maksimālais garums 100 m, RJ-45 savienotājs",
-      "Kategorijas: Cat3, Cat5, Cat5e, Cat6, Cat6a ar ātrumiem",
-      "T568A un T568B krāsu secība",
-      "Taisnais, krustotais un rollover kabelis, kur katru lieto",
-      "Auto-MDIX",
-      "Vara un optikas salīdzinājums (ātrums, attālums, cena, EMI)"
+      "Fiziskais slānis (OSI 1), signāls = elektriski impulsi",
+      "UTP: 4 savīti pāri (8 vadi), RJ-45, bez ekrāna; STP: folija + ekrāns katram pārim",
+      "Maks. garums 100 m",
+      "Problēmas: vājināšanās (attenuation), EMI/RFI, šķērsruna (crosstalk)",
+      "Savīšana samazina šķērsrunu; ekranēšana samazina EMI/RFI",
+      "Kategorijas ar ātrumiem (Cat5e 1 Gbps, Cat6a 10 Gbps)",
+      "TIA/EIA-568: T568A un T568B (atšķiras zaļais un oranžais pāris, kontakti 1, 2, 3, 6)",
+      "Straight-through, crossover, rollover; auto-MDIX",
+      "Joslas platums vs caurlaidspēja vs goodput vs latentums"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "fiziskais slānis pārnes bitus; 3 vides (varš, optika, bezvadu); vītais pāris = visizplatītākais LAN."
+      },
+      {
+        "h": "Problēmas un risinājumi",
+        "t": "vājināšanās (100 m), EMI/RFI, šķērsruna; savīšana un ekranēšana; UTP vs STP vs koaksiālais."
+      },
+      {
+        "h": "Kategorijas un standarti",
+        "t": "Cat3 līdz Cat6a ar ātrumiem, 1000BASE-T nozīme, TIA/EIA-568."
+      },
+      {
+        "h": "Terminēšana",
+        "t": "T568A/B tabula (zaļais un oranžais pāris mainās), straight-through/crossover/rollover, auto-MDIX. Piemērs: PC pie komutatora = straight-through, divi komutatori bez auto-MDIX = crossover."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "salīdzinājums ar optiku; joslas platums vs caurlaidspēja."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kāpēc vadi ir savīti?",
+        "a": "Lai samazinātu šķērsrunu (magnētiskā lauka ietekmi starp pāriem)."
+      },
+      {
+        "q": "Kas ir vājināšanās?",
+        "a": "Signāla stipruma zudums, attālumam pieaugot."
+      },
+      {
+        "q": "Kāds kabelis PC",
+        "a": "konsoles ports?"
+      },
+      {
+        "q": "Kas ietekmē caurlaidspēju?",
+        "a": "Trafika apjoms, trafika tips, latentums."
+      },
+      {
+        "q": "Kas ir modulācija?",
+        "a": "Process, kad viens vilnis maina citu vilni."
+      }
+    ],
+    "links": [
+      3,
+      6,
+      7
     ]
   },
   {
     "id": 3,
     "title": "Optisko kabeļu datu pārraides vide.",
     "modules": "ITN 4",
-    "plan": {
-      "ievads": "Optiskais kabelis pārraida datus kā gaismas impulsus pa ļoti tīra stikla vai plastmasas šķiedru. Tas ļauj lielus attālumus un ātrumus un ir imūns pret EMI/RFI.",
-      "darbiba": "Gaisma iet pa kodolu (core) un atstarojas no apvalka (cladding). Pilnam dupleksam vajag divas šķiedras: viena sūta, otra saņem.",
-      "detalas": "Uzbūve: kodols, apvalks, buferis, kevlara stiprinājums, ārējais apvalks (jacket). SMF: mazs kodols, lāzers, viens stars, maza dispersija, lieli attālumi, dzeltens apvalks. MMF: lielāks kodols, LED, lielāka dispersija, līdz 10 Gbps 550 m, oranžs apvalks. Savienotāji: ST, SC, LC, dupleksais LC.",
-      "piemers": "Zemūdens kabeļi starp kontinentiem un FTTH (optika līdz mājām). Ēkā starp stāviem bieži MMF, starp pilsētām SMF.",
-      "nosleg": "Optika ir dārgāka un prasa vairāk prasmju un drošības pasākumu, bet dod līdz 100 Gbps un līdz 100 km. Salīdzinājums ar vītā pāra kabeli (2. biļete)."
-    },
+    "idea": "optiskā šķiedra pārraida bitus kā gaismas impulsus caur stikla serdi; tā ir ātrākā un tālākā vide, imūna pret EMI/RFI, bet dārgākā.",
     "facts": [
-      "Gaismas impulsi, imūns pret EMI/RFI",
-      "Uzbūve: kodols, apvalks (cladding), buferis, kevlars, ārējais apvalks",
-      "Divas šķiedras pilnam dupleksam",
-      "SMF: mazs kodols, lāzers, maza dispersija, lieli attālumi, dzeltens",
-      "MMF: lielāks kodols, LED, lielāka dispersija, 10 Gbps līdz 550 m, oranžs",
-      "Dispersija = gaismas impulsa izkliede laikā",
-      "Lietojumi: uzņēmumu tīkli, FTTH, tālsatiksmes tīkli, zemūdens tīkli",
-      "Savienotāji: ST, SC, LC, dupleksais multimode LC",
-      "Salīdzinājums ar varu: 100 Gbps, 100 000 m, dārgāks, augsta EMI noturība"
+      "Gaismas impulsi, stikla serde plānāka par matu",
+      "Uzbūve: serde (core), apvalks (cladding), buferis, Kevlar, ārējais apvalks (jacket)",
+      "Divas šķiedras pilndupleksam (TX un RX)",
+      "SMF: maza serde, lāzers, viens stars, maza dispersija, simtiem km, dzeltens",
+      "MMF: lielāka serde, LED, vairāki stari, lielāka dispersija, 10 Gbps līdz 550 m, oranžs",
+      "Dispersija = gaismas impulsa izplešanās laikā",
+      "Savienotāji: ST, SC, LC, duplex LC",
+      "Lietojums: uzņēmumu tīkli, FTTH, tālsatiksme, zemūdens kabeļi",
+      "10 Mbps-100 Gbps, līdz 100 km, pilnīga imunitāte pret EMI/RFI"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "fiziskais slānis; biti kā gaisma; ātrākā, tālākā vide."
+      },
+      {
+        "h": "Uzbūve un darbība",
+        "t": "5 slāņi, atstarošana, 2 šķiedras pilndupleksam."
+      },
+      {
+        "h": "SMF vs MMF",
+        "t": "tabula, dispersija, lāzers vs LED, attālumi, krāsas."
+      },
+      {
+        "h": "Savienotāji un lietojums",
+        "t": "ST, SC, LC; 4 nozares. Piemērs: divas universitātes ēkas 400 m attālumā: MMF/SMF, jo UTP limits ir 100 m."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "salīdzinājums ar varu (100 Gbps/100 km pret 10 Gbps/100 m), cena un prasmes; saite uz biļeti 2."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kāpēc MMF der tikai īsiem attālumiem?",
+        "a": "Lielāka dispersija."
+      },
+      {
+        "q": "Kāds gaismas avots ir SMF?",
+        "a": "Lāzers."
+      },
+      {
+        "q": "Kurš savienotājs ir mazāka SC versija?",
+        "a": "LC."
+      },
+      {
+        "q": "Kāpēc optikai nevajag ekrānu?",
+        "a": "Gaismu neietekmē EMI/RFI."
+      },
+      {
+        "q": "Kāpēc divas šķiedras?",
+        "a": "Viena sūtīšanai, otra saņemšanai (pilnduplekss)."
+      }
+    ],
+    "links": [
+      2,
+      6
     ]
   },
   {
     "id": 4,
     "title": "Bezvadu lokālie tīkli.",
     "modules": "ITN 4",
-    "plan": {
-      "ievads": "Bezvadu lokālais tīkls (WLAN) pārraida datus ar radioviļņiem, ļaujot ierīcēm pieslēgties bez kabeļiem. Pamatā ir IEEE 802.11 (Wi-Fi).",
-      "darbiba": "Klients pieslēdzas bezvadu piekļuves punktam (WAP) pēc tīkla nosaukuma (SSID). Vide ir koplietojama, tāpēc darbojas pusdupleksā (half duplex) un lieto CSMA/CA, lai izvairītos no sadursmēm.",
-      "detalas": "802.11a 5 GHz 54 Mbps; b 2.4 GHz 11 Mbps; g 2.4 GHz 54 Mbps; n 2.4/5 GHz līdz 600 Mbps; ac 5 GHz; ax (Wi-Fi 6) atpakaļsaderīgs; ad 60 GHz. Citi: Bluetooth 802.15, WiMAX 802.16, Zigbee 802.15.4.",
-      "piemers": "Mājas bezvadu maršrutētājs apvieno maršrutētāju, komutatoru un piekļuves punktu. 2.4 GHz sniedzas tālāk caur sienām, 5 GHz ir ātrāks, bet ar mazāku darbības rādiusu.",
-      "nosleg": "Ierobežojumi: pārklājums, traucējumi, drošība, koplietota vide. Drošība: WPA2 ar AES vai WPA3, nekad WEP. Saite ar 18. biļeti (drošība)."
-    },
+    "idea": "WLAN (IEEE 802.11, Wi-Fi) pārraida datus radioviļņos; tā ir koplietojama pusdupleksa vide ar CSMA/CA, klienti asociējas ar piekļuves punktu, un tīklu aizsargā ar autentifikāciju un šifrēšanu (WPA2/AES).",
     "facts": [
-      "IEEE 802.11 Wi-Fi, CSMA/CA, pusdupleks",
-      "Ierobežojumi: pārklājuma zona, traucējumi, drošība, koplietota vide",
-      "Bluetooth 802.15 (WPAN), WiMAX 802.16, Zigbee 802.15.4 (IoT)",
-      "802.11a/b/g/n/ac/ax frekvences un ātrumi",
-      "2.4 GHz sniedzas tālāk, 5 GHz ātrāks ar mazāku rādiusu",
-      "Komponenti: WAP, bezvadu NIC, mājas bezvadu maršrutētājs",
-      "SSID ir tīkla nosaukums, noklusējuma SSID un paroli jāmaina",
-      "Drošība: WPA2 ar AES vai WPA3, nekad WEP"
+      "Klasifikācija: WPAN (Bluetooth, 802.15, līdz 100 m), WLAN (Wi-Fi, 802.11, līdz 300 m), WWAN (jūdzes)",
+      "802.11 standartu tabula ar frekvencēm un ātrumiem",
+      "2,4 GHz, 5 GHz, 60 GHz; nepārklājošie kanāli 1, 6, 11 (2,4 GHz)",
+      "CSMA/CA soļi (RTS/CTS, backoff)",
+      "Topoloģijas: Ad hoc, infrastruktūras režīms, tethering",
+      "Asociācija: 3 posmi: atklāt (discover), autentificēt, asociēt",
+      "Pasīvā (beacon) un aktīvā (probe request) AP meklēšana",
+      "Asociācijas parametri: SSID, parole, tīkla režīms, drošības režīms, kanāls",
+      "Drošība: WEP (RC4, CRC-32, novecojis) -> WPA (TKIP, MIC) -> WPA2/802.11i (AES, CCM)",
+      "Komponenti: bezvadu NIC, WAP, bezvadu maršrutētājs (AP + komutators + maršrutētājs), antenas",
+      "WLAN vs LAN: RF vs kabelis, CSMA/CA vs CSMA/CD"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "WLAN = IEEE 802.11 (Wi-Fi), 1. un 2. slānis, radioviļņi; WPAN/WLAN/WWAN; Wi-Fi Alliance."
+      },
+      {
+        "h": "Standarti",
+        "t": "tabula no 802.11 līdz 802.11ad (ātrumi, GHz, saderība); 2,4 vs 5 GHz; kanāli 1, 6, 11."
+      },
+      {
+        "h": "Darbība",
+        "t": "CSMA/CA soļi ar RTS/CTS; WLAN pret LAN; topoloģijas (ad hoc, infrastruktūra, tethering)."
+      },
+      {
+        "h": "Asociācija un drošība",
+        "t": "beacon vs probe, discover/authenticate/associate, SSID; WEP -> WPA (TKIP) -> WPA2 (AES). Piemērs: MikroTik hAP ac2: ap bridge, SSID, WPA2 PSK, klients dabū IP no DHCP."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "komponenti (NIC, AP, mājas maršrutētājs, antenas), izvietošana; saite uz drošību (18)."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kāda piekļuves metode ir Wi-Fi?",
+        "a": "CSMA/CA."
+      },
+      {
+        "q": "Kāpēc WLAN ir pusdupleksa?",
+        "a": "Visi koplieto vienu radio kanālu."
+      },
+      {
+        "q": "Kuri 2,4 GHz kanāli nepārklājas?",
+        "a": "1, 6, 11."
+      },
+      {
+        "q": "Ar ko atšķiras pasīvā un aktīvā AP meklēšana?",
+        "a": "Beacon no AP vs probe request no klienta."
+      },
+      {
+        "q": "Kāda šifrēšana WPA2?",
+        "a": "AES (CCM). WPA"
+      },
+      {
+        "q": "Kuras ierīces traucē Wi-Fi?",
+        "a": "Mikroviļņu krāsnis, bezvadu telefoni."
+      },
+      {
+        "q": "Kas ir tethering?",
+        "a": "Telefons kā personīgais hotspots (ad hoc variants)."
+      }
+    ],
+    "links": [
+      6,
+      18,
+      13
     ]
   },
   {
     "id": 5,
     "title": "Decimālā, binārā un heksadecimālā skaitīšanas sistēmas.",
     "modules": "ITN 5",
-    "plan": {
-      "ievads": "Tīklos lieto trīs skaitīšanas sistēmas: decimālo (bāze 10) cilvēkiem, bināro (bāze 2) iekārtām un heksadecimālo (bāze 16) īsākam garu bināru skaitļu pierakstam.",
-      "darbiba": "Binārajā katra pozīcija ir 2 pakāpe. Okteta pozīciju vērtības: 128 64 32 16 8 4 2 1. Decimālu uz bināro pārvērš ar atņemšanas metodi: no lielākās vērtības uz leju.",
-      "detalas": "IPv4 = 32 biti = 4 okteti, katrs 0-255. Maskas okteti: 128, 192, 224, 240, 248, 252, 254, 255. Viens hex cipars = 4 biti (0-9, A-F). MAC 48 biti = 12 hex cipari, IPv6 128 biti = 32 hex cipari.",
-      "piemers": "192 = 11000000. 168 = 10101000 = A8 hex. 255.255.255.0 = 24 vieninieki = /24. FF02 hex = 65282.",
-      "nosleg": "Binārā sistēma vajadzīga IPv4 un apakštīklošanai (8. biļete), heksadecimālā MAC (6.) un IPv6 (9.) adresēm."
-    },
+    "idea": "dators strādā ar bitiem; IPv4 adreses un maskas lieto binārā un decimālā formā, MAC un IPv6 adreses heksadecimālā, jo 1 hex cipars = 4 biti.",
     "facts": [
-      "Bāzes: decimālā 10, binārā 2, heksadecimālā 16",
+      "Bāzes: 10, 2, 16; pozicionālā notācija (cipars × bāze^pozīcija)",
       "Okteta vērtības 128 64 32 16 8 4 2 1",
-      "Atņemšanas metode decimāls uz bināru",
-      "Heksadecimālie cipari 0-9 un A-F, viens cipars = 4 biti",
-      "Maskas okteti 128, 192, 224, 240, 248, 252, 254, 255",
-      "IPv4 32 biti binārā un punktētā decimālā formā",
-      "MAC = 12 hex cipari, IPv6 = 32 hex cipari",
-      "Konkrēts piemērs (192 = 11000000, 168 = A8)"
+      "Pārveidošana ar atņemšanas metodi un dalīšanu",
+      "1 hex cipars = 4 biti (nibble); A-F = 10-15",
+      "IPv4 = 32 biti = 4 okteti, dotted-decimal; MAC = 48 biti = 12 hex; IPv6 = 128 biti = 32 hex",
+      "Maskas vērtības: 128, 192, 224, 240, 248, 252, 254, 255",
+      "AND operācija tīkla adreses noteikšanai"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "dators saprot tikai bitus; cilvēkam ērtāka decimālā; tīkliem vajag visas trīs."
+      },
+      {
+        "h": "Pozicionālā notācija",
+        "t": "120, 1011₂, FF02₁₆ izrēķināti."
+      },
+      {
+        "h": "Binārā un IPv4",
+        "t": "32 biti, 4 okteti, 128-1; uz tāfeles 192 un 168 ar atņemšanas metodi; maskas vērtības; AND piemērs."
+      },
+      {
+        "h": "Heksadecimālā",
+        "t": "4 biti = 1 cipars, A-F; MAC (48 b = 12 hex, OUI) un IPv6 (128 b); 168 -> A8."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "bez binārā nevar saprast masku un apakštīklus; saite uz 8 un 9."
+      }
+    ],
+    "followups": [
+      {
+        "q": "11110000 = ?",
+        "a": "240."
+      },
+      {
+        "q": "255 hex = ?",
+        "a": "FF."
+      },
+      {
+        "q": "Cik bitu vienā hex ciparā?",
+        "a": "4."
+      },
+      {
+        "q": "Kā sauc IPv4 pieraksta formātu?",
+        "a": "Dotted-decimal."
+      },
+      {
+        "q": "0xCA binārajā?",
+        "a": "11001010."
+      }
+    ],
+    "links": [
+      8,
+      9,
+      6
     ]
   },
   {
     "id": 6,
     "title": "Ethernet protokols.",
     "modules": "ITN 6, 7, 9",
-    "plan": {
-      "ievads": "Ethernet (IEEE 802.3) ir visizplatītākā vadu LAN tehnoloģija, kas darbojas OSI 1. un 2. slānī.",
-      "darbiba": "Datu posma slānim ir 2 apakšslāņi: LLC (802.2) identificē 3. slāņa protokolu, MAC apakšslānis veic enkapsulāciju un piekļuvi videi. Mūsdienu komutētais Ethernet ir pilnā dupleksā bez sadursmēm, vecajos centrmezglos (hub) lietoja CSMA/CD.",
-      "detalas": "Rāmis: preambula 7 B + SFD 1 B, galamērķa MAC 6 B, avota MAC 6 B, tips 2 B (0x0800 IPv4, 0x86DD IPv6, 0x0806 ARP), dati 46-1500 B, FCS 4 B. Rāmis 64-1518 B, mazāks par 64 B = runt. MAC 48 biti: OUI 24 biti + ražotāja 24 biti.",
-      "piemers": "Dators sūta uz citu tīklu: ARP pieprasījums (apraide FF-FF-FF-FF-FF-FF) noskaidro vārtejas MAC, atbilde ir vienraide. Rāmja galamērķa MAC = vārteja, IP = gala serveris.",
-      "nosleg": "Ethernet nodrošina lokālo piegādi starp MAC adresēm. Saite ar 7. biļeti (komutēšana) un 8. (IPv4)."
-    },
+    "idea": "Ethernet (IEEE 802.3) ir vadu LAN tehnoloģija 1. un 2. slānī; tā iekapsulē paketes kadros, adresē ar 48 bitu MAC adresēm un pārbauda kļūdas ar FCS.",
     "facts": [
-      "IEEE 802.3, OSI 1. un 2. slānis",
-      "LLC (802.2) un MAC apakšslāņi",
-      "CSMA/CD (centrmezgli), CSMA/CA (Wi-Fi), mūsdienās pilns duplekss",
-      "Rāmja lauki ar izmēriem, galamērķa MAC ir pirmais",
-      "Tipa lauks: 0x0800 IPv4, 0x86DD IPv6, 0x0806 ARP",
-      "Rāmis 64-1518 B, runt < 64 B, FCS kļūdu pārbaude",
-      "MAC 48 biti, OUI 24 biti piešķir IEEE",
-      "Apraides MAC FF-FF-FF-FF-FF-FF, multiraides 01-00-5E un 33-33",
-      "ARP: pieprasījums apraide, atbilde vienraide, arp -a",
-      "IPv6 lieto Neighbor Discovery (NS/NA) ARP vietā"
+      "IEEE 802.3 (MAC) un 802.2 (LLC), OSI 1. un 2. slānis",
+      "Apakšslāņi: LLC (software, identificē L3 protokolu, saziņa ar augšējiem slāņiem) un MAC (hardware, iekapsulēšana, piekļuve videi)",
+      "Kadra lauki ar izmēriem: Preambula 7 B + SFD 1 B, Galamērķa MAC 6 B (pirmais), Avota MAC 6 B, Tips 2 B, Dati 46-1500 B, FCS 4 B",
+      "Kadra izmērs 64-1518 B; < 64 = runt (atmet)",
+      "EtherType: 0x0800 IPv4, 0x86DD IPv6, 0x0806 ARP",
+      "MAC: 48 biti, OUI (24 b, IEEE) + ražotāja daļa (24 b)",
+      "Unicast / broadcast FF-FF-FF-FF-FF-FF / multicast 01-00-5E (IPv4), 33-33 (IPv6)",
+      "CSMA/CD (mantotie centrmezgli, pusduplekss); mūsdienās pilnduplekss",
+      "ARP: pieprasījums = apraide, atbilde = unicast"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "Ethernet = visizplatītākā LAN tehnoloģija, IEEE 802.3, 1. un 2. slānis, 10 Mbps-100 Gbps."
+      },
+      {
+        "h": "Datu posma slānis",
+        "t": "pakalpojumi, LLC (802.2, software, L3 protokols) vs MAC (hardware, adresācija, piekļuve videi); CSMA/CD vēsture."
+      },
+      {
+        "h": "Kadrs",
+        "t": "uzzīmēt laukus ar baitiem, 64-1518 B, EtherType vērtības, FCS/CRC."
+      },
+      {
+        "h": "MAC adresācija un ARP",
+        "t": "OUI, unicast/broadcast/multicast; ARP request (broadcast) -> reply (unicast); piemērs ar vārteju."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "Ethernet nogādā kadru līdz nākamajai ierīcei; tālāk IP; saite uz komutēšanu (7)."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kura adrese kadrā ir pirmā?",
+        "a": "Galamērķa MAC."
+      },
+      {
+        "q": "Kas ir FCS?",
+        "a": "4 B CRC noslēgumā kļūdu noteikšanai."
+      },
+      {
+        "q": "Ko dara LLC?",
+        "a": "Identificē tīkla slāņa protokolu, saziņa ar augšējiem slāņiem (software)."
+      },
+      {
+        "q": "Ko dara MAC apakšslānis?",
+        "a": "Kadru novietošana vidē un noņemšana, adresācija, CSMA/CD vai CSMA/CA."
+      },
+      {
+        "q": "Kāda ir ARP pieprasījuma galamērķa MAC?",
+        "a": "FFFF.FFFF.FFFF."
+      },
+      {
+        "q": "01-00-5E-... ir?",
+        "a": "IPv4 multicast MAC."
+      }
+    ],
+    "links": [
+      7,
+      14,
+      18
     ]
   },
   {
     "id": 7,
     "title": "Ethernet komutēšana (switching).",
     "modules": "ITN 7",
-    "plan": {
-      "ievads": "Ethernet komutators ir 2. slāņa iekārta, kas pārsūta rāmjus, balstoties uz MAC adresēm un savu MAC adrešu tabulu.",
-      "darbiba": "Mācās no avota MAC: pieraksta avota MAC un ienākošo portu tabulā. Pārsūta pēc galamērķa MAC: ja zināms, tikai uz to portu. Nezināma vienraide, apraide un multiraide tiek izplūdināta (flood) uz visiem portiem, izņemot ienākošo.",
-      "detalas": "Ieraksti noveco pēc 5 min. Store-and-forward pārbauda FCS (CRC) un izmet bojātus rāmjus. Cut-through: fast-forward (tikai galamērķa MAC), fragment-free (pirmie 64 B). Buferi: portu buferis vai koplietota atmiņa (ļauj asimetrisku komutēšanu). Autonegotiation, duplex mismatch, auto-MDIX.",
-      "piemers": "PC1 sūta PC3: komutators iemācās PC1 MAC portā 1. PC3 MAC nav tabulā, rāmis tiek izplūdināts. PC3 atbild, komutators iemācās PC3 portu un turpmāk sūta tikai uz to. Pārbaude: show mac address-table.",
-      "nosleg": "Katrs komutatora ports ir atsevišķs sadursmju domēns, viss komutators ir viens apraides domēns, maršrutētāji sadala apraides domēnus (10. biļete)."
-    },
+    "idea": "2. slāņa komutators mācās MAC adreses no ienākošo kadru avota adreses un pārsūta kadrus tikai uz vajadzīgo portu pēc galamērķa MAC adreses.",
     "facts": [
-      "Mācās no avota MAC, pārsūta pēc galamērķa MAC",
-      "Izplūdināšana (flood): nezināma vienraide, apraide, multiraide, izņemot ienākošo portu",
-      "MAC tabulas ieraksti noveco pēc 5 minūtēm, show mac address-table",
-      "Store-and-forward pārbauda FCS un izmet bojātus rāmjus",
-      "Cut-through: fast-forward un fragment-free (64 B)",
-      "Buferi: portu buferis un koplietota atmiņa",
-      "Katrs ports = sadursmju domēns, komutators = viens apraides domēns",
-      "Autonegotiation, duplex mismatch, auto-MDIX"
+      "Mācīšanās no avota MAC, pārsūtīšana pēc galamērķa MAC",
+      "MAC tabula (CAM), novecošanās 5 minūtes, show mac address-table",
+      "Nezināma unicast, broadcast, multicast -> pārpludināšana (flooding) visos portos, izņemot ienākošo",
+      "Katrs ports = atsevišķs sadursmju domēns; viss komutators = viens apraides domēns",
+      "Store-and-forward (pārbauda CRC/FCS) vs cut-through: fast-forward (tikai galamērķa MAC), fragment-free (pirmie 64 B)",
+      "Buferēšana: portu (port-based) vs koplietojamā (shared memory, asimetriska komutācija)",
+      "Duplekss, autonegotiation, duplex mismatch, auto-MDIX",
+      "Runt kadri (< 64 B) tiek atmesti"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "komutators = L2 ierīce, lēmumi tikai pēc MAC; aizstāja centrmezglus."
+      },
+      {
+        "h": "MAC tabula",
+        "t": "mācās no avota, pārsūta pēc galamērķa, pārpludina; 5 min; piemērs ar 4 PC."
+      },
+      {
+        "h": "Domēni",
+        "t": "sadursmju domēns katram portam, apraides domēnu sadala maršrutētājs."
+      },
+      {
+        "h": "Pārsūtīšanas metodes un buferi",
+        "t": "tabula; fragment-free 64 B; shared memory asimetriskai komutācijai."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "duplekss, autonegotiation, auto-MDIX -> tāpēc mūsdienu LAN nav sadursmju; saite uz 6."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kuru adresi komutators ieraksta tabulā?",
+        "a": "Avota MAC no ienākošā kadra."
+      },
+      {
+        "q": "Kad komutators pārpludina?",
+        "a": "Nezināms galamērķis vai broadcast/multicast."
+      },
+      {
+        "q": "Divi cut-through piemēri?",
+        "a": "Fast-forward, fragment-free."
+      },
+      {
+        "q": "Kāda kadra daļa store-and-forward pārbaudē?",
+        "a": "CRC noslēgumā."
+      },
+      {
+        "q": "Kas ir auto-MDIX?",
+        "a": "Automātiski nosaka Ethernet kabeļa tipu."
+      }
+    ],
+    "links": [
+      6,
+      10
     ]
   },
   {
     "id": 8,
     "title": "IPv4 protokols.",
     "modules": "ITN 8, 11",
-    "plan": {
-      "ievads": "IPv4 ir tīkla (3.) slāņa protokols, kas adresē un maršrutē paketes starp tīkliem. Tas ir bezsavienojuma (connectionless), labākās iespējas (best effort) un no vides neatkarīgs (media independent).",
-      "darbiba": "Tīkla slāņa darbības: adresācija, enkapsulācija, maršrutēšana, dekapsulācija. Resursdators ar masku (loģiskais AND) nosaka tīkla daļu un izlemj, vai galamērķis ir lokālajā tīklā vai jāsūta noklusējuma vārtejai.",
-      "detalas": "Galvene 20 B (līdz 60 B): versija 0100, IHL, DS (DSCP + ECN), kopējais garums, identifikācija/karogi/fragmenta nobīde, TTL, protokols (1 ICMP, 6 TCP, 17 UDP), galvenes kontrolsumma, avota un galamērķa IP. Privātās: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16. Loopback 127.0.0.0/8, APIPA 169.254.0.0/16.",
-      "piemers": "192.168.1.0/24 sadalot ar /26: 4 apakštīkli (.0, .64, .128, .192), katrā 62 resursdatori (2^6 - 2). TTL samazinās par 1 katrā maršrutētājā, pie 0 pakete tiek izmesta un sūtīts ICMP Time Exceeded.",
-      "nosleg": "Adrešu trūkuma dēļ lieto privātās adreses ar NAT un pāriet uz IPv6 (9. biļete). Adreses Eiropā sadala RIPE NCC."
-    },
+    "idea": "IPv4 ir 3. slāņa protokols ar 32 bitu hierarhiskām adresēm; maska nosaka tīkla un hosta daļu, un IP ir bezsavienojuma, \"best effort\" un no vides neatkarīgs.",
     "facts": [
-      "Tīkla slāņa darbības: adresācija, enkapsulācija, maršrutēšana, dekapsulācija",
-      "Bezsavienojuma, best effort, no vides neatkarīgs",
-      "32 biti, punktēts decimālais formāts",
-      "Galvene 20 B, galvenie lauki (TTL, protokols, avota/galamērķa IP)",
-      "Protokola numuri: 1 ICMP, 6 TCP, 17 UDP",
-      "Tīkla adrese = IP AND maska; tīkla, resursdatora, apraides adrese",
-      "Privātās adreses RFC 1918 un NAT",
-      "Loopback 127.0.0.0/8, APIPA 169.254.0.0/16, multiraide 224-239",
-      "Klases A/B/C/D/E (vēsturiski), tagad CIDR; RIR (RIPE NCC)",
-      "Apakštīklošana: 2^h - 2 resursdatori, /26 piemērs"
+      "Tīkla slāņa 4 operācijas: adresēšana, iekapsulēšana, maršrutēšana, dekapsulēšana",
+      "IP īpašības: connectionless, best effort, media independent",
+      "Galvene 20 B (līdz 60 B), lauki: Version (0100), IHL, DS (DSCP+ECN), Total Length, Identification, Flags, Fragment Offset, TTL, Protocol (1 ICMP, 6 TCP, 17 UDP), Header Checksum, Source IP, Destination IP",
+      "32 biti, dotted-decimal, prefikss /24 = 255.255.255.0",
+      "Tīkla adrese = IP AND maska; tīkla, hosta, apraides adrese",
+      "Privātās (RFC 1918): 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 -> NAT",
+      "Speciālās: loopback 127.0.0.0/8, APIPA 169.254.0.0/16",
+      "Unicast/broadcast/multicast (224.0.0.0-239.255.255.255)",
+      "Apakštīklošana: hosti = 2^h - 2",
+      "Mantotās klases A, B, C, D, E -> CIDR; RIR (RIPE NCC Eiropā)"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "3. slānis, 4 operācijas, 3 īpašības."
+      },
+      {
+        "h": "Galvene",
+        "t": "20 B, lauki ar nozīmi (TTL, Protocol 1/6/17, adreses)."
+      },
+      {
+        "h": "Adrese un maska",
+        "t": "32 biti, AND uz tāfeles, tīkla/hosta/apraides adrese; unicast/broadcast/multicast."
+      },
+      {
+        "h": "Adrešu tipi + apakštīklošana",
+        "t": "privātās + NAT (MikroTik masquerade), loopback, APIPA; /26 piemērs (62 hosti)."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "4,3 miljardi adrešu nepietika -> NAT un IPv6."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kurš lauks norāda augšējā slāņa protokolu?",
+        "a": "Protocol."
+      },
+      {
+        "q": "Kāds lauks satur 0100?",
+        "a": "Version."
+      },
+      {
+        "q": "Kas notiek, kad TTL = 0?",
+        "a": "Pakete atmesta, ICMP Time Exceeded avotam."
+      },
+      {
+        "q": "Cik hostu /26?",
+        "a": "62."
+      },
+      {
+        "q": "Ko nozīmē 169.254.x.x?",
+        "a": "Nav saņemta adrese no DHCP."
+      },
+      {
+        "q": "Ko pārbauda ping 127.0.0.1?",
+        "a": "TCP/IP steka darbību."
+      }
+    ],
+    "links": [
+      5,
+      9,
+      10,
+      13
     ]
   },
   {
     "id": 9,
     "title": "IPv6 protokols.",
     "modules": "ITN 8, 12",
-    "plan": {
-      "ievads": "IPv6 ir nākamās paaudzes tīkla slāņa protokols ar 128 bitu adresēm, kas risina IPv4 adrešu izsīkumu un vienkāršo galveni.",
-      "darbiba": "Adrese 8 heksteti pa 16 bitiem, rakstīti heksadecimāli. Saīsināšana: izlaiž sākuma nulles, :: aizstāj nulles tikai vienu reizi. Resursdators sūta RS, maršrutētājs atbild ar RA, un ierīce iegūst adresi ar SLAAC vai DHCPv6.",
-      "detalas": "Galvene fiksēti 40 B, 8 lauki: versija 0110, traffic class, flow label, payload length, next header, hop limit, avots, galamērķis. Nav kontrolsummas, maršrutētāji nefragmentē. Tipi: GUA 2000::/3, LLA fe80::/10, ULA fc00::/7, loopback ::1, multiraide ff00::/8, nav apraides.",
-      "piemers": "GUA = 48 bitu globālais maršrutēšanas prefikss + 16 bitu apakštīkla ID + 64 bitu saskarnes ID. EUI-64: MAC FC:99:47:75:CE:E0 kļūst par FE99:47FF:FE75:CEE0. Noklusējuma vārteja = maršrutētāja LLA.",
-      "nosleg": "Pāreja no IPv4: dual stack, tunelēšana, translācija (NAT64). Saite ar 8. biļeti (IPv4)."
-    },
+    "idea": "IPv6 ar 128 bitu adresēm atrisina IPv4 izsīkumu, novērš vajadzību pēc NAT un ievieš vienkāršāku 40 B galveni un automātisku konfigurāciju (SLAAC).",
     "facts": [
-      "128 biti, 8 heksteti, heksadecimāls pieraksts",
-      "Saīsināšana: sākuma nulles, :: tikai vienreiz",
-      "Galvene 40 B, 8 lauki, nav kontrolsummas, maršrutētāji nefragmentē",
-      "GUA 2000::/3, LLA fe80::/10, ULA fc00::/7, ::1, ::",
-      "Multiraide ff00::/8 (ff02::1 visi mezgli, ff02::2 visi maršrutētāji), nav apraides, ir anycast",
-      "GUA struktūra 48 + 16 + 64",
-      "RS/RA, SLAAC, SLAAC + stateless DHCPv6, stateful DHCPv6",
-      "EUI-64 (FFFE vidū, 7. bits apgriezts) un DAD",
-      "Pārejas metodes: dual stack, tunelēšana, translācija (NAT64)"
+      "128 biti, 8 hekseti pa 16 bitiem, hex, atdalīti ar kolu",
+      "Galvene fiksēti 40 B, 8 lauki: Version (0110), Traffic Class, Flow Label, Payload Length, Next Header, Hop Limit, Source, Destination",
+      "Nav galvenes kontrolsummas; maršrutētāji nefragmentē",
+      "Saīsināšana: sākuma nulles; :: tikai vienreiz",
+      "GUA 2000::/3, LLA fe80::/10, ULA fc00::/7, loopback ::1, multicast ff00::/8; nav broadcast",
+      "GUA: 48 b globālais prefikss + 16 b apakštīkla ID + 64 b interfeisa ID; /64",
+      "RS/RA; SLAAC, SLAAC + stateless DHCPv6, stateful DHCPv6",
+      "EUI-64 (FFFE vidū, apgriež 7. bitu); DAD",
+      "Neighbor Discovery: NS/NA aizstāj ARP",
+      "Pāreja: dual stack, tunelēšana, NAT64",
+      "NAT nav vajadzīgs, jo katram pietiek publisko adrešu"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "IPv4 izsīkums, NAT problēmas; 128 biti = 340 undecilioni adrešu; katram publiskā adrese, NAT nevajag."
+      },
+      {
+        "h": "Galvene",
+        "t": "40 B, 8 lauki, salīdzinājums ar IPv4 (nav checksum, nav fragmentācijas maršrutētājos, Hop Limit)."
+      },
+      {
+        "h": "Pieraksts",
+        "t": "hekseti, 2 noteikumi ar piemēru uz tāfeles, /64."
+      },
+      {
+        "h": "Adrešu tipi un konfigurācija",
+        "t": "GUA struktūra, LLA, multicast (nav broadcast); RS/RA, 3 metodes, EUI-64, DAD, NS/NA."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "dual stack, tunelēšana, NAT64."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kāpēc IPv6 nevajag NAT?",
+        "a": "Pietiek publisko adrešu katram hostam."
+      },
+      {
+        "q": "Saīsini 2001:0db8:0000:0000:0000:0000:0000:0001",
+        "a": "2001:db8::1."
+      },
+      {
+        "q": "Kāpēc :: tikai vienreiz?",
+        "a": "Citādi nav zināms, cik nulles heksetu katrs aizstāj."
+      },
+      {
+        "q": "Kas aizstāj ARP?",
+        "a": "Neighbor Solicitation un Neighbor Advertisement."
+      },
+      {
+        "q": "Kas aizstāj apraidi?",
+        "a": "Multicast (ff02::1)."
+      }
+    ],
+    "links": [
+      8,
+      5,
+      6
     ]
   },
   {
     "id": 10,
     "title": "IP virzīšana (routing).",
     "modules": "ITN 8, 13",
-    "plan": {
-      "ievads": "Maršrutēšana (routing) ir labākā ceļa izvēle paketei no viena tīkla uz citu. To dara maršrutētāji (routers) OSI 3. slānī.",
-      "darbiba": "Resursdators pēc maskas izlemj: lokāls galamērķis tiek sasniegts tieši, attāls tiek sūtīts noklusējuma vārtejai. Maršrutētājs meklē galamērķi maršrutēšanas tabulā un izvēlas garāko prefiksa atbilstību (longest prefix match).",
-      "detalas": "Tabulas kodi: C pieslēgts tīkls, L lokālā saskarnes IP, S statisks, O OSPF, D EIGRP; noklusējuma maršruts 0.0.0.0/0. OSPF: atvērts standarts, link-state, apgabali. EIGRP: Cisco, metrika no joslas platuma, aizkaves, slodzes, uzticamības. BGP starp ISP.",
-      "piemers": "ping izmanto ICMP echo request/reply. traceroute palielina TTL pa 1, un katrs maršrutētājs atbild ar ICMP Time Exceeded, tā redzams ceļš. Datorā: route print vai netstat -r.",
-      "nosleg": "Statisko maršrutēšanu viegli kontrolēt, dinamiskā pielāgojas izmaiņām. Saite ar 8. un 9. biļeti (IP adresācija)."
-    },
+    "idea": "maršrutēšana ir labākā ceļa izvēle paketei uz citu tīklu; hosts sūta attālās paketes uz noklusējuma vārteju, maršrutētājs izvēlas ceļu pēc garākās atbilstības un mazākās metrikas.",
     "facts": [
-      "Lokāls vai attāls galamērķis pēc maskas, attālais uz noklusējuma vārteju",
-      "route print, netstat -r",
-      "Tabulas kodi C, L, S, O, D; noklusējuma maršruts 0.0.0.0/0",
-      "Garākā prefiksa atbilstība (longest prefix match)",
-      "Statiskā vs dinamiskā maršrutēšana",
-      "OSPF (atvērts, link-state), EIGRP (Cisco), BGP (starp ISP)",
-      "ICMP: echo request/reply, destination unreachable, time exceeded",
-      "traceroute palielina TTL"
+      "3. slānis; maršrutētājs; katrs maršrutētājs = lēciens (hop)",
+      "Hosts: lokāls vs attāls galamērķis (pēc maskas); attāls -> noklusējuma vārteja",
+      "Hosta maršrutēšanas tabula: loopback, lokālā tīkla maršruts, noklusējuma maršruts; route print, netstat -r",
+      "Maršrutētāja tabula: C (connected), L (local), S (static), O (OSPF), D (EIGRP); 0.0.0.0/0",
+      "Garākā prefiksa atbilstība (longest match); starp vairākiem maršrutiem: mazākā metrika",
+      "Statiskā vs dinamiskā; OSPF (atvērts, link-state), EIGRP (Cisco), BGP (starp ISP)",
+      "show ip route, ip route ...",
+      "Maršrutētājs sadala apraides domēnus",
+      "ICMP: ping (echo request/reply), traceroute (TTL), Time Exceeded, Destination Unreachable"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "maršrutēšana = labākā ceļa izvēle, 3. slānis, lēcieni."
+      },
+      {
+        "h": "Hosta lēmums",
+        "t": "lokāls vs attāls, vārteja, route print."
+      },
+      {
+        "h": "Maršrutētāja tabula",
+        "t": "kodi, longest match piemērs, metrika."
+      },
+      {
+        "h": "Statiskā vs dinamiskā",
+        "t": "OSPF, EIGRP, BGP; R1-R2 piemērs uz tāfeles."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "pārbaude ar ping un traceroute (ICMP, TTL); saite uz 14 (MAC mainās, IP ne)."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kā hosts nodrošina pareizu galamērķi?",
+        "a": "Sava tabula: loopback, lokālais tīkls, noklusējuma maršruts."
+      },
+      {
+        "q": "Kuru parametru izmanto starp vairākiem maršrutiem?",
+        "a": "Zemāko metriku."
+      },
+      {
+        "q": "Ko nozīmē L kods?",
+        "a": "Maršrutētāja interfeisa IP."
+      },
+      {
+        "q": "Kā strādā traceroute?",
+        "a": "Palielina TTL, saņem Time Exceeded."
+      },
+      {
+        "q": "Kāpēc komutatoram vārteja?",
+        "a": "Lai komutatoru varētu pārvaldīt no cita tīkla."
+      }
+    ],
+    "links": [
+      8,
+      14,
+      17
     ]
   },
   {
     "id": 11,
     "title": "TCP protokols.",
     "modules": "ITN 14",
-    "plan": {
-      "ievads": "TCP (Transmission Control Protocol) ir uzticams, uz savienojumu orientēts transporta (4.) slāņa protokols. To lieto, kad svarīga katra baita piegāde: tīmeklis, e-pasts, failu pārsūtīšana.",
-      "darbiba": "Savienojumu izveido 3 soļu rokasspiediens: SYN, SYN-ACK, ACK. Dati tiek numurēti ar secības numuriem, saņēmējs apstiprina ar ACK, pazudušie segmenti tiek pārsūtīti. Savienojumu beidz ar FIN, ACK, FIN, ACK.",
-      "detalas": "Galvene 20 B, 10 lauki: avota un galamērķa ports, secības numurs, apstiprinājuma numurs, galvenes garums, rezervēts, kontroles biti (URG ACK PSH RST SYN FIN), logs, kontrolsumma, urgent. ISN ir nejaušs. Logs nosaka plūsmas kontroli, MSS 1460 B, SACK.",
-      "piemers": "Pārlūks atver https savienojumu: klients no dinamiskā porta (piem. 49200) sūta SYN uz servera 443. Porti: 20/21 FTP, 22 SSH, 23 Telnet, 25 SMTP, 80 HTTP, 110 POP3, 143 IMAP, 443 HTTPS.",
-      "nosleg": "TCP iespējas: sesijas izveide, uzticama piegāde, piegāde tajā pašā secībā, plūsmas kontrole. Pretstats ir UDP (12. biļete)."
-    },
+    "idea": "TCP ir uzticams, uz savienojumu orientēts transporta protokols: izveido sesiju ar trīsvirzienu rokasspiedienu, numurē baitus, apstiprina, atkārto pazaudēto un regulē plūsmu.",
     "facts": [
-      "TCP iespējas: sesijas izveide, uzticama piegāde, tā pati secība, plūsmas kontrole",
-      "3 soļu rokasspiediens SYN, SYN-ACK, ACK",
-      "Savienojuma beigšana FIN, ACK, FIN, ACK",
-      "Galvene 20 B, 10 lauki, kontroles biti",
-      "Secības un apstiprinājuma numuri, ISN nejaušs",
-      "Logs (window) un plūsmas kontrole, MSS 1460, SACK",
-      "Portu diapazoni: 0-1023, 1024-49151, 49152-65535",
-      "Ligzda (socket) = IP + ports",
-      "TCP porti: 20/21, 22, 23, 25, 80, 110, 143, 443"
+      "4. slānis; PDU = segments",
+      "4 īpašības: sesijas izveide, uzticama piegāde, piegāde pareizā secībā, plūsmas kontrole",
+      "Galvene 20 B, 10 lauki: Source Port 16, Destination Port 16, Sequence 32, Acknowledgment 32, Header Length 4, Reserved 6, Control Bits 6, Window 16, Checksum 16, Urgent 16, Options",
+      "Karogi: URG, ACK, PSH, RST, SYN, FIN",
+      "3-way handshake: SYN -> SYN,ACK -> ACK; beigšana: FIN, ACK, FIN, ACK (4 soļi)",
+      "ISN nejaušs (drošība)",
+      "SACK, loga izmērs, slīdošais logs, MSS 1460 (1500 - 20 - 20), pārslodzes kontrole",
+      "Porti: 0-1023, 1024-49151, 49152-65535; ligzda (socket) = IP + ports",
+      "Portu tabula (20/21, 22, 23, 25, 53, 80, 110, 143, 443)"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "transporta slānis, TCP = uzticamais; 4 īpašības; kur lieto (HTTP, SSH, e-pasts)."
+      },
+      {
+        "h": "Galvene",
+        "t": "uzzīmēt 20 B, 10 lauki, karogi."
+      },
+      {
+        "h": "Rokasspiediens",
+        "t": "SYN, SYN-ACK, ACK + 4 soļu FIN; ISN nejaušs."
+      },
+      {
+        "h": "Uzticamība un plūsma",
+        "t": "seq/ack, SACK piemērs, window, MSS 1460 aprēķins, pārslodze. Piemērs: pārlūks 49152 -> serveris 443."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "porti, ligzdas; TCP dārgāks par UDP; saite uz 12."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kuri karogi otrajā segmentā?",
+        "a": "SYN un ACK."
+      },
+      {
+        "q": "Kāpēc MSS 1460?",
+        "a": "1500 - 20 - 20."
+      },
+      {
+        "q": "Ko nosaka loga izmērs?",
+        "a": "Cik baitu var sūtīt bez ACK."
+      },
+      {
+        "q": "Kāpēc ISN nejaušs?",
+        "a": "Pret uzbrukumiem."
+      },
+      {
+        "q": "Dinamisko portu diapazons?",
+        "a": "49152-65535."
+      }
+    ],
+    "links": [
+      12,
+      13,
+      16
     ]
   },
   {
     "id": 12,
     "title": "UDP protokols.",
     "modules": "ITN 14",
-    "plan": {
-      "ievads": "UDP (User Datagram Protocol) ir vienkāršs, bezsavienojuma transporta (4.) slāņa protokols ar minimālu papildslodzi (overhead). To lieto, kad ātrums svarīgāks par uzticamību.",
-      "darbiba": "UDP vienkārši nosūta datagrammas bez savienojuma izveides, bez apstiprinājumiem, bez secības atjaunošanas un bez plūsmas kontroles. Ja kaut kas pazūd, to risina lietotne vai neko nedara.",
-      "detalas": "Galvene tikai 8 B: avota ports, galamērķa ports, garums, kontrolsumma. PDU = datagramma. Porti: 53 DNS, 67 DHCP serveris, 68 DHCP klients, 69 TFTP, 161 SNMP.",
-      "piemers": "VoIP zvanā vai video tiešraidē novēlota pakete ir bezvērtīga, tāpēc labāk to izlaist nekā gaidīt pārsūtīšanu. DNS vaicājums ir viens mazs pieprasījums un atbilde, tāpēc UDP ir ātrāks.",
-      "nosleg": "DNS izmanto TCP, ja atbilde > 512 B vai zonu pārsūtīšanai. Salīdzinājums ar TCP (11. biļete)."
-    },
+    "idea": "UDP ir vienkāršs bezsavienojuma transporta protokols ar 8 B galveni; tas neapstiprina, nekārto un neatkārto datus, tāpēc ir ātrs un piemērots reāllaika lietotnēm.",
     "facts": [
-      "Bezsavienojuma, nav ACK, nav secības atjaunošanas, nav plūsmas kontroles",
-      "Galvene 8 B: avota ports, galamērķa ports, garums, kontrolsumma",
-      "PDU = datagramma",
-      "Lietojumi: VoIP, video, DNS, DHCP, SNMP, TFTP",
-      "UDP porti: 53, 67, 68, 69, 161",
-      "DNS pāriet uz TCP, ja atbilde > 512 B vai zonu pārsūtīšanai",
-      "Salīdzinājums ar TCP (20 B vs 8 B, uzticamība vs ātrums)"
+      "4. slānis, PDU = datagramma, \"best effort\"",
+      "Nav sesijas, nav ACK, nav secības, nav plūsmas kontroles, mazs overhead",
+      "Galvene 8 B, 4 lauki: Source Port 16, Destination Port 16, Length 16 (galvene + dati), Checksum 16",
+      "Lietojums: VoIP, video, spēles, DNS, DHCP, SNMP, TFTP",
+      "Porti: 53 DNS, 67/68 DHCP, 69 TFTP, 161 SNMP",
+      "DNS pāriet uz TCP, ja atbilde > 512 B vai zonu pārsūtīšana",
+      "TCP vs UDP salīdzinājums"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "otrs transporta protokols, \"vieglais\", datagrammas."
+      },
+      {
+        "h": "Īpašības",
+        "t": "ko UDP nedara (4 lietas) un kāpēc tas ir priekšrocība."
+      },
+      {
+        "h": "Galvene",
+        "t": "8 B, 4 lauki; salīdzini ar TCP 20 B."
+      },
+      {
+        "h": "Lietojums",
+        "t": "VoIP (labāk zaudēt kadru nekā gaidīt), DNS (53), DHCP (67/68), TFTP (69), SNMP (161); DNS -> TCP virs 512 B."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "TCP vs UDP tabula; izvēle atkarīga no lietotnes."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kāpēc VoIP lieto UDP?",
+        "a": "Atkārtoti dati pienāktu par vēlu."
+      },
+      {
+        "q": "UDP galvenes izmērs?",
+        "a": "8 B."
+      },
+      {
+        "q": "DHCP porti?",
+        "a": "67 serveris, 68 klients."
+      },
+      {
+        "q": "Kad DNS lieto TCP?",
+        "a": "> 512 B vai zonu pārsūtīšana."
+      }
+    ],
+    "links": [
+      11,
+      13,
+      15
     ]
   },
   {
     "id": 13,
     "title": "Populārākie lietojumu slāņa protokoli un pielietojumi.",
     "modules": "ITN 15",
-    "plan": {
-      "ievads": "Lietojumu slāņa protokoli ir tuvākie lietotājam: tie nodrošina saskarni starp lietotnēm un tīklu. TCP/IP lietojumu slānis atbilst OSI 5., 6. un 7. slānim.",
-      "darbiba": "Divi modeļi: klients-serveris (klients pieprasa, serveris atbild) un vienādranga (P2P, piem. BitTorrent, Gnutella), kur katra iekārta var būt gan klients, gan serveris.",
-      "detalas": "HTTP 80 (GET, POST, PUT), HTTPS 443 ar TLS. E-pasts: SMTP sūta (25), POP3 lejupielādē un dzēš no servera (110), IMAP atstāj kopiju serverī (143). DHCP DORA: DISCOVER, OFFER, REQUEST, ACK, nomas laiks (lease). FTP 21 vadība, 20 dati. SSH/SFTP 22, SMB 445, Telnet 23 nešifrēts.",
-      "piemers": "Dators pieslēdzas tīklam: DHCP DORA piešķir IP, masku, vārteju un DNS. Tad pārlūks ar DNS atrod servera IP un ar HTTPS ielādē lapu.",
-      "nosleg": "Katram protokolam savs ports un uzdevums. Saite ar 15. biļeti (DNS) un 16. (vietnes atvēršana)."
-    },
+    "idea": "lietotnes slānis ir lietotājam tuvākais; tā protokoli nosaka, kā programmas apmainās ar datiem: tīmeklis (HTTP/HTTPS), e-pasts (SMTP/POP3/IMAP), adresācija (DNS, DHCP), failu pārsūtīšana (FTP), attālā piekļuve (SSH/Telnet) un IoT (MQTT, REST).",
     "facts": [
+      "TCP/IP lietotnes slānis = OSI 5+6+7",
       "Klients-serveris vs P2P (BitTorrent, Gnutella)",
-      "HTTP 80 metodes GET, POST, PUT; HTTPS 443 ar TLS",
-      "SMTP 25 sūta, POP3 110 lejupielādē un dzēš, IMAP 143 atstāj kopiju",
-      "DHCP DORA un nomas laiks (lease), UDP 67/68",
-      "FTP 21 vadība, 20 dati",
-      "SSH/SFTP 22, Telnet 23 nešifrēts",
-      "SMB 445 failu koplietošanai",
-      "DNS 53 (sīkāk 15. biļetē)"
+      "HTTP 80 / HTTPS 443 (TLS), GET/POST/PUT",
+      "SMTP 25 (sūta), POP3 110 (lejupielādē, dzēš), IMAP 143 (kopija paliek)",
+      "DNS 53, DHCP 67/68 un DORA (DISCOVER, OFFER, REQUEST, ACK), lease",
+      "FTP 20 (dati) un 21 (vadība), SFTP/SSH 22, Telnet 23, TFTP 69, SMB 445",
+      "SSH šifrē, Telnet ne",
+      "IoT: MQTT (publish/subscribe, M2M, viegls) un REST (API caur HTTP)",
+      "Praktiski: MikroTik kā DHCP serveris, DNS serveris, NAT"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "lietotnes slānis tuvākais lietotājam; OSI 5-7; klients-serveris vs P2P."
+      },
+      {
+        "h": "Tīmeklis",
+        "t": "HTTP/HTTPS, porti, GET/POST/PUT, TLS, REST."
+      },
+      {
+        "h": "E-pasts",
+        "t": "SMTP sūta, POP3 vs IMAP saņem."
+      },
+      {
+        "h": "Infrastruktūra",
+        "t": "DNS (vārds -> IP) un DHCP DORA ar lease; MikroTik piemērs: DHCP klients uz WAN, DHCP serveris LAN, DNS, NAT masquerade."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "FTP (2 porti), SSH vs Telnet; IoT: MQTT publish/subscribe; portu tabula."
+      }
+    ],
+    "followups": [
+      {
+        "q": "POP3 vs IMAP?",
+        "a": "POP3 lejupielādē un dzēš, IMAP atstāj kopiju."
+      },
+      {
+        "q": "DHCP ziņojumi secībā?",
+        "a": "DISCOVER, OFFER, REQUEST, ACK."
+      },
+      {
+        "q": "Kāpēc FTP 2 porti?",
+        "a": "21 vadībai, 20 datiem."
+      },
+      {
+        "q": "Kāpēc SSH labāks par Telnet?",
+        "a": "Šifrē visu, arī paroles."
+      },
+      {
+        "q": "Kas ir MQTT?",
+        "a": "Viegls publish/subscribe M2M protokols IoT."
+      }
+    ],
+    "links": [
+      15,
+      16,
+      11,
+      12
     ]
   },
   {
     "id": 14,
     "title": "Enkapsulācijas/dekapsulācijas procesi.",
     "modules": "ITN 3",
-    "plan": {
-      "ievads": "Enkapsulācija ir process, kurā katrs slānis sūtot pievieno datiem savu galveni (un 2. slānis arī beigas). Dekapsulācija ir pretējs process saņēmējā.",
-      "darbiba": "Sūtot: lietotnes dati, transporta slānis pievieno TCP/UDP galveni (segments/datagramma), tīkla slānis IP galveni (pakete), datu posma slānis Ethernet galveni un FCS (rāmis), fiziskais slānis pārraida bitus. Saņemot galvenes noņem pretējā secībā.",
-      "detalas": "Segmentēšanas ieguvumi: ātrums (multipleksēšana, vairākas sarunas vienlaikus) un efektivitāte (jāpārsūta tikai pazudusī daļa). Secība (sequencing) numurē segmentus. Loģiskā adrese (IP) tiek pievienota tīkla slānī, fiziskā (MAC) datu posma slānī. PDU ir vispārīgs nosaukums.",
-      "piemers": "Sūtot tīmekļa pieprasījumu: HTTP, TCP, IP, Ethernet. IP adreses paliek tās pašas visā ceļā, bet MAC adreses mainās katrā posmā. Ja galamērķis ir attālā tīklā, rāmja galamērķa MAC ir noklusējuma vārtejas MAC.",
-      "nosleg": "Enkapsulācija ļauj katram slānim strādāt neatkarīgi. Saite ar 1. biļeti (OSI un TCP/IP modeļi)."
-    },
+    "idea": "sūtot datus, katrs slānis pievieno savu galveni (iekapsulēšana), saņēmējs tās noņem apgrieztā secībā (dekapsulēšana); IP adreses paliek visā ceļā, MAC adreses mainās katrā lēcienā.",
     "facts": [
-      "Enkapsulācija sūtot (augša uz leju), dekapsulācija saņemot",
-      "PDU: dati, segments/datagramma, pakete, rāmis, biti",
-      "Segmentēšanas ieguvumi: ātrums (multipleksēšana) un efektivitāte",
-      "Secība (sequencing) numurē segmentus salikšanai",
-      "Secība HTTP, TCP, IP, Ethernet un pretēji saņemot",
-      "IP (loģiskā) tīkla slānī, MAC (fiziskā) datu posma slānī",
-      "IP adreses nemainās, MAC mainās katrā posmā",
-      "Attālam galamērķim rāmja MAC = vārtejas MAC"
+      "Segmentēšana: ātrums (multipleksēšana) un efektivitāte; secības numuri (sequencing)",
+      "PDU: dati -> segments/datagramma -> pakete -> kadrs -> biti; PDU = vispārīgais termins",
+      "Ko pievieno katrs slānis: porti (TCP 20 B/UDP 8 B), IP (20/40 B), kadra galvene (MAC) + noslēgums (FCS)",
+      "Sūtīšanas secība: HTTP, TCP, IP, Ethernet",
+      "Saņemšana: Ethernet -> IP -> TCP -> HTTP",
+      "Loģiskā adrese (IP) 3. slānī, fiziskā (MAC) 2. slānī",
+      "IP end-to-end, MAC hop-to-hop; attāls galamērķis -> kadra galamērķis = vārtejas MAC",
+      "Maršrutētājs dekapsulē līdz L3, samazina TTL, iekapsulē jaunā kadrā"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "dati ceļo \"aploksnēs\"; katrs slānis pievieno savu galveni."
+      },
+      {
+        "h": "Segmentēšana",
+        "t": "ātrums un efektivitāte, sequencing."
+      },
+      {
+        "h": "PDU pa slāņiem",
+        "t": "tabula ar baitiem; uzzīmēt shēmu."
+      },
+      {
+        "h": "Dekapsulēšana + adreses",
+        "t": "apgrieztā secība; IP end-to-end, MAC hop-to-hop; PC1 -> PC2 tabula."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "iekapsulēšana savieno visu OSI modeli; saite uz 1 un 16."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kas notiek ar IP paketi pirms fiziskās vides?",
+        "a": "Tiek iekapsulēta L2 kadrā."
+      },
+      {
+        "q": "Klienta steka secība web pieprasījumam?",
+        "a": "HTTP, TCP, IP, Ethernet."
+      },
+      {
+        "q": "Kura adrese mainās katrā lēcienā?",
+        "a": "MAC."
+      },
+      {
+        "q": "Vispārīgais termins datiem jebkurā slānī?",
+        "a": "PDU."
+      },
+      {
+        "q": "Kurā slānī pievieno loģisko adresi?",
+        "a": "Tīkla."
+      }
+    ],
+    "links": [
+      1,
+      10,
+      16
     ]
   },
   {
     "id": 15,
     "title": "DNS sistēma.",
     "modules": "ITN 15",
-    "plan": {
-      "ievads": "DNS (Domain Name System) pārvērš cilvēkam saprotamus domēnu vārdus (FQDN, piem. www.cisco.com) IP adresēs. Bez DNS būtu jāatceras IP adreses.",
-      "darbiba": "Klients sūta vaicājumu savam DNS serverim (UDP 53). Ja serverim nav ieraksta kešatmiņā, tas jautā hierarhijā: saknes serveris, augstākā līmeņa domēna (TLD) serveris, tad autoritatīvais serveris. Atbilde tiek saglabāta kešatmiņā.",
-      "detalas": "Hierarhija: sakne (.), TLD (.com, .lv), otrā līmeņa domēns (cisco.com), apakšdomēni (www, mail). Ieraksti: A (IPv4), AAAA (IPv6), NS (autoritatīvais serveris), MX (pasta serveris). Ziņojuma sadaļas: question, answer, authority, additional.",
-      "piemers": "nslookup www.cisco.com parāda IP adresi. ipconfig /displaydns parāda kešatmiņu, ipconfig /flushdns to iztīra. Lielām atbildēm (> 512 B) un zonu pārsūtīšanai DNS lieto TCP.",
-      "nosleg": "DNS ir pirmais solis, atverot gandrīz jebkuru vietni (16. biļete)."
-    },
+    "idea": "DNS ir hierarhiska, izkliedēta sistēma, kas pārveido domēna vārdus (FQDN) IP adresēs; strādā ar UDP 53 un kešo atbildes.",
     "facts": [
-      "FQDN pārvēršana IP adresē",
-      "Hierarhija: sakne, TLD, otrā līmeņa domēns, apakšdomēni",
-      "Ieraksti A, AAAA, NS, MX",
-      "Rekursīvs vaicājums un kešatmiņa",
-      "Ziņojuma sadaļas: question, answer, authority, additional",
-      "UDP 53, TCP > 512 B un zonu pārsūtīšanai",
-      "nslookup, ipconfig /displaydns, ipconfig /flushdns"
+      "Lietotnes slānis, UDP 53 (TCP 53, ja > 512 B vai zonu pārsūtīšana)",
+      "FQDN (www.cisco.com)",
+      "Atrisināšanas soļi; kešs (TTL)",
+      "Hierarhija: sakne (root) -> TLD (.com, .lv) -> otrā līmeņa (cisco.com) -> apakšdomēni (www)",
+      "Zonas; rekursīvi vaicājumi citiem serveriem",
+      "Ieraksti: A (IPv4), AAAA (IPv6), NS, MX",
+      "Ziņojuma sadaļas: Question, Answer, Authority, Additional",
+      "nslookup, ipconfig /displaydns, ipconfig /flushdns",
+      "MikroTik: virzis kā DNS serveris iekšējam tīklam"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "\"interneta telefongrāmata\", lietotnes slānis, UDP 53."
+      },
+      {
+        "h": "Process",
+        "t": "6 soļi, kešs."
+      },
+      {
+        "h": "Hierarhija",
+        "t": "koks uz tāfeles, zonas, root/TLD/autoritatīvais."
+      },
+      {
+        "h": "Ieraksti un rīki",
+        "t": "A, AAAA, NS, MX; sadaļas; nslookup, ipconfig /displaydns; MikroTik kā DNS serveris LAN."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "UDP vs TCP; DNS = pirmais solis vietnes atvēršanā (16)."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kurš ieraksts glabā IPv6?",
+        "a": "AAAA."
+      },
+      {
+        "q": "Kāpēc UDP?",
+        "a": "Mazi, ātri pieprasījumi."
+      },
+      {
+        "q": "Kas ir FQDN?",
+        "a": "Pilnais domēna vārds."
+      },
+      {
+        "q": "Kā redzēt DNS kešu Windows?",
+        "a": "ipconfig /displaydns."
+      },
+      {
+        "q": "Kas ir MX ieraksts?",
+        "a": "Domēna pasta serveris."
+      }
+    ],
+    "links": [
+      13,
+      16,
+      12
     ]
   },
   {
     "id": 16,
     "title": "Kādas datortīkla plūsmas notiek, atverot Tīmekļa vietni.",
     "modules": "ITN sintēze",
-    "plan": {
-      "ievads": "Atverot vietni, vienas sekundes laikā notiek vairāki protokoli no visiem slāņiem: DHCP, ARP, DNS, TCP, TLS un HTTP.",
-      "darbiba": "1) Dators jau ir saņēmis IP, masku, vārteju un DNS ar DHCP. 2) ARP noskaidro vārtejas MAC. 3) DNS vaicājums (UDP 53) iegūst servera IP. 4) TCP rokasspiediens uz portu 443. 5) TLS izveido šifrētu kanālu. 6) HTTP GET pieprasa lapu.",
-      "detalas": "Serveris atbild ar HTML. Pārlūks to attēlo un pieprasa papildu resursus (CSS, JS, attēli). Beigās savienojums tiek slēgts ar FIN. Katrā maršrutētājā MAC adreses mainās, IP adreses paliek tās pašas, TTL samazinās.",
-      "piemers": "Ieraksti www.cisco.com: DNS atgriež A ierakstu, pārlūks no dinamiskā porta (49152-65535) sūta SYN uz 443, saņem SYN-ACK, atbild ar ACK, tad TLS un GET /.",
-      "nosleg": "Tā ir visu biļešu sintēze: enkapsulācija (14.), DNS (15.), TCP (11.), Ethernet un ARP (6.), maršrutēšana (10.)."
-    },
+    "idea": "atverot vietni, dators secīgi izmanto DHCP, ARP, DNS, TCP rokasspiedienu, TLS un HTTP GET; katrs papildu resurss atkārto daļu no šiem soļiem.",
     "facts": [
-      "DHCP: IP, maska, vārteja, DNS serveris (jau iepriekš)",
-      "ARP vārtejas MAC adresei",
-      "DNS vaicājums UDP 53, A/AAAA ieraksts",
-      "TCP 3 soļu rokasspiediens uz 443",
-      "TLS šifrēšana (HTTPS)",
-      "HTTP GET un HTML atbilde",
-      "Papildu resursi (CSS, JS, attēli)",
-      "Savienojuma beigšana ar FIN",
-      "IP nemainās, MAC mainās katrā posmā"
+      "0. DHCP (IP, maska, vārteja, DNS) DORA",
+      "1. ARP pēc vārtejas MAC (DNS serveris citā tīklā)",
+      "2. DNS vaicājums UDP 53 (A/AAAA), kešs",
+      "3. TCP 3-way handshake uz 443 (vai 80)",
+      "4. TLS rokasspiediens (sertifikāts, atslēgas)",
+      "5. HTTP GET -> HTML atbilde",
+      "6. Pārlūks attēlo; papildu resursi (attēli, CSS, JS) -> jauni GET, varbūt jauns DNS",
+      "7. FIN aizver",
+      "Katrā paketē: iekapsulēšana, IP nemainās, MAC mainās katrā lēcienā; NAT mājas virzī"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "viens klikšķis iedarbina gandrīz visu protokolu steku."
+      },
+      {
+        "h": "Sagatavošana",
+        "t": "DHCP DORA, ARP pēc vārtejas MAC."
+      },
+      {
+        "h": "DNS",
+        "t": "UDP 53, kešs, hierarhija, A ieraksts."
+      },
+      {
+        "h": "Savienojums",
+        "t": "TCP rokasspiediens uz 443, TLS, GET, HTML; iekapsulēšana, NAT, MAC mainās/IP ne."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "pārlūks attēlo, papildresursi, FIN; tas ir OSI no 7 līdz 1 un atpakaļ."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kāpēc ARP pirms DNS?",
+        "a": "Vajag vārtejas MAC, DNS serveris citā tīklā."
+      },
+      {
+        "q": "HTTPS ports?",
+        "a": "TCP 443."
+      },
+      {
+        "q": "Kāda galamērķa MAC ir kadrā uz interneta serveri?",
+        "a": "Vārtejas MAC."
+      },
+      {
+        "q": "Ja DNS nestrādā?",
+        "a": "Var atvērt, ievadot IP tieši."
+      }
+    ],
+    "links": [
+      13,
+      15,
+      11,
+      14
     ]
   },
   {
     "id": 17,
     "title": "Cisco IOS lietošana un iekārtas konfigurēšana.",
     "modules": "ITN 2, 10",
-    "plan": {
-      "ievads": "Cisco IOS ir Cisco tīkla iekārtu operētājsistēma. To konfigurē caur komandrindas saskarni (CLI).",
-      "darbiba": "Piekļuve: konsole (sākotnējā konfigurācija, īpašs kabelis, tīkls nav vajadzīgs), SSH (22), Telnet (23), AUX. Režīmi: User EXEC >, Privileged EXEC # (enable), globālā konfigurācija (config)# (configure terminal), līnijas (config-line)#, saskarnes (config-if)#. exit iet līmeni atpakaļ, end vai Ctrl+Z uz #.",
-      "detalas": "Atmiņa: RAM = running-config (zūd pēc restarta), NVRAM = startup-config, Flash = IOS, ROM = ielāde. copy running-config startup-config saglabā. enable secret ir šifrēta un pārraksta enable password. login ieslēdz paroles pārbaudi līnijā. ? dod kontekstjutīgu palīdzību, Tab pabeidz komandu.",
-      "piemers": "Komutatora pamata konfigurācija: hostname, line console 0 + password + login, line vty 0 15, enable secret, service password-encryption, banner motd, interface vlan 1 + ip address + no shutdown, copy running-config startup-config. Pārbaude: show ip interface brief, ping.",
-      "nosleg": "Paroles var aizsargāt konsoli, VTY līnijas un privileged EXEC. Saite ar 18. biļeti (drošība)."
-    },
+    "idea": "Cisco IOS pārvalda caur CLI ar hierarhiskiem režīmiem; konfigurācija ir running-config (RAM) un startup-config (NVRAM), un to saglabā ar copy running-config startup-config.",
     "facts": [
-      "Piekļuves veidi: konsole, SSH, Telnet, AUX",
-      "OS slāņi: čaula (shell), kodols (kernel), aparatūra",
-      "Režīmi un uzvednes: >, #, (config)#, (config-line)#, (config-if)#",
-      "Pārvietošanās: enable, configure terminal, exit, end, Ctrl+Z",
-      "Palīdzība ? un Tab, Ctrl+Shift+6",
-      "Komandas sintakse: komanda, atslēgvārds (keyword), arguments",
-      "Atmiņa: RAM, NVRAM, Flash, ROM",
-      "copy running-config startup-config",
+      "Piekļuve: konsole (out-of-band, rollover, sākotnēji), SSH (22, šifrēts), Telnet (23, nešifrēts), AUX (modems/dial-up)",
+      "OS: shell (saskarne starp lietotāju un kodolu), kernel (aparatūra), hardware",
+      "Režīmi un uzvednes: > User EXEC, # Privileged EXEC, (config)#, (config-line)#, (config-if)#",
+      "Pārejas: enable, configure terminal, exit, end/Ctrl+Z, disable",
+      "Atmiņa: RAM (running-config, zūd), NVRAM (startup-config), Flash (IOS), ROM (bootup)",
+      "Pamatkonfigurācija: hostname, paroles (console, vty, enable secret), login, service password-encryption, banner, SVI, copy run start",
+      "Palīdzība ?, Tab, Ctrl+Shift+6",
+      "Sintakse: uzvedne, komanda, atslēgvārds (keyword), arguments",
       "Hostname noteikumi",
-      "Paroles: line console 0, line vty 0 15, login, enable secret, service password-encryption",
-      "SVI: interface vlan 1, ip address, no shutdown",
-      "show running-config, show ip interface brief"
+      "Setup mode, ja NVRAM nav konfigurācijas",
+      "show ip interface brief, show running-config, show version"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "IOS = Cisco OS; shell/kernel; CLI; piekļuve: konsole, SSH, Telnet, AUX."
+      },
+      {
+        "h": "Režīmi",
+        "t": "5 režīmi ar uzvednēm un pārejām."
+      },
+      {
+        "h": "Atmiņa un faili",
+        "t": "RAM/NVRAM/Flash/ROM; running vs startup; copy komandas; setup mode."
+      },
+      {
+        "h": "Pamatkonfigurācija",
+        "t": "iet cauri komutatora konfigurācijai (hostname, 3 paroles, login, encryption, banner, SVI, gateway, save)."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "drošība (enable secret, SSH, transport input ssh), pārbaude ar show ip interface brief; salīdzinājums ar MikroTik Winbox."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Kur glabājas startup-config?",
+        "a": "NVRAM."
+      },
+      {
+        "q": "Kura atmiņa zūd pēc restartēšanas?",
+        "a": "RAM."
+      },
+      {
+        "q": "Ko konfigurē interface vlan 1 + IP?",
+        "a": "SVI."
+      },
+      {
+        "q": "Kura komanda ieslēdz paroli user EXEC?",
+        "a": "login."
+      },
+      {
+        "q": "Kāpēc router nonāk setup mode?",
+        "a": "NVRAM nav konfigurācijas."
+      },
+      {
+        "q": "Kas ir running-config komandā show running-config?",
+        "a": "Atslēgvārds (keyword)."
+      }
+    ],
+    "links": [
+      18,
+      10,
+      7
     ]
   },
   {
     "id": 18,
     "title": "Datoru tīklu drošība.",
     "modules": "ITN 16",
-    "plan": {
-      "ievads": "Tīkla drošība aizsargā datus un iekārtas pret neatļautu piekļuvi, bojājumiem un pakalpojumu pārtraukumiem.",
-      "darbiba": "Draudi: informācijas zādzība, datu zudums un manipulācija, identitātes zādzība, pakalpojuma traucēšana. Ievainojamības: tehnoloģiskās, konfigurācijas, drošības politikas. Fiziskie draudi: aparatūras, vides, elektriskie, uzturēšanas.",
-      "detalas": "Ļaunatūra: vīruss (vajag saimniekprogrammu un lietotāju), tārps (izplatās pats caur ievainojamībām), Trojas zirgs (izskatās likumīgs, nevairojas). Uzbrukumi: izlūkošana (ping sweep, port scan), piekļuves (paroles, uzticības izmantošana, portu pāradresācija, MITM), DoS/DDoS.",
-      "piemers": "Aizsardzība: VPN, ASA ugunsmūris, IPS, ESA/WSA, AAA (autentifikācija, autorizācija, uzskaite), dublējumi, atjauninājumi. Iekārtas nostiprināšana: security passwords min-length 8, login block-for 120 attempts 3 within 60, exec-timeout 5 0, tikai SSH.",
-      "nosleg": "Drošība ir slāņaina (defense in depth). Saite ar 17. biļeti (IOS paroles) un 4. (WPA2/WPA3)."
-    },
+    "idea": "tīkla drošība nozīmē saprast draudus, ievainojamības un uzbrukumus un aizsargāties vairākos slāņos: ugunsmūri, AAA, šifrēšana (SSH, WPA2), atjauninājumi, rezerves kopijas un pareizi konfigurētas iekārtas.",
     "facts": [
       "4 draudu veidi: informācijas zādzība, datu zudums/manipulācija, identitātes zādzība, pakalpojuma traucēšana",
-      "Ievainojamības: tehnoloģiskās, konfigurācijas, drošības politikas",
-      "Fiziskie draudi: aparatūras, vides, elektriskie, uzturēšanas",
-      "Vīruss vs tārps vs Trojas zirgs",
-      "Izlūkošanas, piekļuves un DoS/DDoS uzbrukumi",
-      "Aizsardzība: VPN, ugunsmūris, IPS, AAA, dublējumi, atjauninājumi",
-      "Ugunsmūru veidi: paketju filtrēšana, lietotņu filtrēšana, URL filtrēšana, SPI; DMZ",
-      "IOS nostiprināšana: min-length, login block-for, exec-timeout, SSH"
+      "3 ievainojamību veidi: tehnoloģiskās, konfigurācijas, drošības politikas",
+      "4 fiziskie draudi: aparatūras, vides, elektriskie, apkopes",
+      "Ļaunprogrammatūra: vīruss, tārps, Trojas zirgs (atšķirības)",
+      "Uzbrukumi: izlūkošana, piekļuve (paroles, uzticības izmantošana, portu pāradresācija, MITM), DoS/DDoS",
+      "Aizsardzība: VPN, ASA ugunsmūris, IPS, ESA/WSA, AAA (Authentication, Authorization, Accounting)",
+      "Ugunsmūri: pakešu, lietotņu, URL filtrēšana, SPI; DMZ; NAT",
+      "Cisco: security passwords min-length 8, login block-for 120 attempts 3 within 60, exec-timeout 5 0, transport input ssh, service password-encryption, auto secure",
+      "WLAN: WEP (RC4) -> WPA (TKIP) -> WPA2 (AES)",
+      "ARP spoofing",
+      "IoT drošības izaicinājumi"
+    ],
+    "plan": [
+      {
+        "h": "Ievads",
+        "t": "drošība aizsargā konfidencialitāti, integritāti, pieejamību; 4 draudu veidi."
+      },
+      {
+        "h": "Ievainojamības un fiziskie draudi",
+        "t": "3 + 4 veidi ar piemēriem."
+      },
+      {
+        "h": "Ļaunprogrammatūra un uzbrukumi",
+        "t": "vīruss/tārps/Trojas zirgs; izlūkošana, piekļuve (MITM, ARP spoofing), DoS/DDoS."
+      },
+      {
+        "h": "Aizsardzība",
+        "t": "VPN, ASA, IPS, AAA (3 A), ugunsmūru veidi, SPI, DMZ; WLAN WEP -> WPA2/AES."
+      },
+      {
+        "h": "Noslēgums",
+        "t": "Cisco komandas (min-length 8, login block-for, exec-timeout, SSH, auto secure); IoT izaicinājumi; drošība ir process."
+      }
+    ],
+    "followups": [
+      {
+        "q": "Tārps vs vīruss?",
+        "a": "Tārps izplatās pats caur ievainojamībām, bez saimnieka."
+      },
+      {
+        "q": "Ko nozīmē AAA?",
+        "a": "Authentication, Authorization, Accounting."
+      },
+      {
+        "q": "DoS vs DDoS?",
+        "a": "Viens avots vs daudzi (botnet)."
+      },
+      {
+        "q": "Ko dara SPI?",
+        "a": "Ielaiž tikai atbildes uz iekšējiem pieprasījumiem."
+      },
+      {
+        "q": "Ko dara login block-for 120 attempts 3 within 60?",
+        "a": "Bloķē pieteikšanos 120 s pēc 3 neveiksmēm 60 s laikā."
+      },
+      {
+        "q": "Kāpēc IoT ierīces ir grūti aizsargāt?",
+        "a": "Daudz ierīču, netradicionālas vietas, nav atjauninājumu."
+      }
+    ],
+    "links": [
+      4,
+      17,
+      6
     ]
   }
 ]

@@ -117,7 +117,8 @@ main { margin-top: 16px; }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; }
 .stat strong { font-size: 1.5rem; color: var(--accent); }
 .stat span { font-size: 0.8rem; color: var(--muted); }
-.modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.modes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 900px) { .modes { grid-template-columns: repeat(2, 1fr); } }
 .mode { text-align: left; padding: 18px; display: flex; flex-direction: column; }
 .mode p { flex: 1; font-size: 0.9rem; }
 @media (max-width: 720px) {

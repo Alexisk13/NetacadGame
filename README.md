@@ -3,6 +3,8 @@
 Exam prep game for "Datoru tīkli I" (Cisco ITN v7). Vite + React, hosted free on GitHub Pages, accounts and progress in Supabase (free tier).
 
 Modes:
+- **Mācības**: one bite-sized lesson per ticket: short idea cards, each followed by a quick check (tap answer, ordering, matching, sorting, message-flow diagrams) and mini-labs (binary/hex bits, switch MAC table, encapsulation, subnetting, IPv6 shortening). Wrong steps repeat at the end; 1-3 stars per lesson.
+- **Laboratorijas simulators**: Cisco IOS CLI for the lab exam (switch basic configuration), with abbreviations, `?`, real IOS errors and a task checklist.
 - **Viktorīna**: NetAcad style multiple choice (single and "choose two/three") with explanations.
 - **Kartītes**: flashcards with self rating.
 - **Biļetes**: draw one of the 18 oral exam tickets, 5-minute timer with speech checkpoints, fact checklist, follow-up questions.
@@ -21,11 +23,12 @@ Without a `.env` the app runs in **local mode** (no login, progress in this brow
 ## Content
 
 All questions are in `src/data/`:
-- `tickets.json`: 18 tickets with speech plan (5 phases) and key facts.
+- `tickets.json`: 18 tickets with main idea, required facts, 5-part speech plan, follow-up questions and related tickets. Generated from `EKSAMENA_BILETES.md` (the source of truth for the oral exam).
+- `lessons.json`: `{ t, steps: [...] }` per ticket. Step kinds: `info` (h, t, b bullets, tbl rows, tip), `mcq` (q, o, a index, e), `order` (q, items in correct order), `match` (q, pairs), `sort` (q, buckets, items [text, bucket]), `flow` (h, actors, steps {f, to, m, n}), `widget` (w: binary, subnet, ipv6, encap, mactable, cli).
 - `flashcards.json`: `{ id, t, q, a }`, `t` = ticket number (0 = ITN 1 basics).
 - `quiz.json`: `{ id, t, q, o: [options], a: [correct indexes], e: explanation }`. More than one index = "choose N". Options are shuffled in the game.
 
-Run `npm run check-data` after editing (checks JSON, ids, answer indexes, no em dashes).
+Run `npm run check-data` after editing (checks JSON, ids, answer indexes, lesson step shapes, no em dashes) and `npm test` (renders every lesson step and page, runs the lab exam through the CLI simulator).
 
 ## Supabase setup (once)
 

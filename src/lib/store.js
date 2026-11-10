@@ -3,7 +3,7 @@ import { supabase, hasBackend } from './supabase'
 
 export const localDay = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 const lsKey = (uid) => `netacad-progress-${uid}`
-export const emptyProgress = () => ({ v: 1, t: 0, srs: {}, tickets: {}, stats: { answered: 0, correct: 0, days: [] } })
+export const emptyProgress = () => ({ v: 1, t: 0, srs: {}, tickets: {}, lessons: {}, stats: { answered: 0, correct: 0, days: [] } })
 
 function readLocal(uid) {
   try {

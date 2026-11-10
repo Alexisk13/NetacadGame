@@ -11,3 +11,4 @@ export const topicTitle = (id) => TOPICS.find((t) => t.id === id)?.title ?? ''
 export const CARDS = flashcards.map((c) => ({ ...c, key: `f:${c.id}` }))
 export const QUESTIONS = quiz.map((q) => ({ ...q, key: `q:${q.id}` }))
 export const ALL_ITEMS = [...CARDS, ...QUESTIONS]
+export { default as LESSONS } from '../data/lessons.json'

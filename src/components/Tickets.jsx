@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { tickets, CARDS } from '../lib/data'
+import { tickets } from '../lib/data'
 import { shuffle } from '../lib/srs'
 
 const TOTAL = 300
@@ -25,8 +25,8 @@ function beep(freq = 660, ms = 180) {
   } catch { /* audio not available */ }
 }
 
-export default function Tickets({ progress, update }) {
-  const [ticket, setTicket] = useState(null)
+export default function Tickets({ progress, update, preset }) {
+  const [ticket, setTicket] = useState(() => tickets.find((t) => t.id === preset) ?? null)
   const [summary, setSummary] = useState(null)
 
   const draw = () => {
@@ -123,6 +123,7 @@ function Speech({ t, onFinish, onExit }) {
       <section className="card speech-head">
         <div className="ticket-no">Biļete Nr. {t.id}</div>
         <h1>{t.title}</h1>
+        {showPlan && <p className="idea">{t.idea}</p>}
         <div className={`timer ${elapsed >= TOTAL ? 'over' : ''}`}>{fmt(Math.max(0, TOTAL - elapsed))}</div>
         <div className="phasebar">
           {PHASES.map((p, i) => (
@@ -155,7 +156,7 @@ function Speech({ t, onFinish, onExit }) {
                 <span className="muted small">{fmt(p.from)}-{fmt(p.to)}</span>
               </div>
               <div className="muted small">{p.tip}</div>
-              {showPlan ? <p>{t.plan[p.key]}</p> : <p className="muted small">(paslēpts)</p>}
+              {showPlan ? <p><strong className="accent">{t.plan[i].h}:</strong> {t.plan[i].t}</p> : <p className="muted small">(paslēpts)</p>}
             </div>
           ))}
         </section>
@@ -179,7 +180,7 @@ function Speech({ t, onFinish, onExit }) {
 }
 
 function Summary({ s, onDraw, onList }) {
-  const followUps = useMemo(() => shuffle(CARDS.filter((c) => c.t === s.t.id)).slice(0, 4), [s])
+  const followUps = useMemo(() => shuffle(s.t.followups).slice(0, 4), [s])
   const [open, setOpen] = useState(() => new Set())
   return (
     <div className="stack">
@@ -204,7 +205,7 @@ function Summary({ s, onDraw, onList }) {
         <p className="muted small">Eksaminētājs pēc runas uzdod jautājumus. Atbildi skaļi, tad pārbaudi.</p>
         <div className="followups">
           {followUps.map((c, i) => (
-            <button key={c.id} className="followup" onClick={() => setOpen(new Set(open).add(i))}>
+            <button key={c.q} className="followup" onClick={() => setOpen(new Set(open).add(i))}>
               <strong>{c.q}</strong>
               {open.has(i) ? <span>{c.a}</span> : <span className="muted small">Rādīt atbildi</span>}
             </button>

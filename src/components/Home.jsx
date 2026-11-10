@@ -2,13 +2,14 @@ import { TOPICS, CARDS, QUESTIONS, ALL_ITEMS } from '../lib/data'
 import { counts } from '../lib/srs'
 import { streak } from '../lib/store'
 
-export default function Home({ name, progress, go, reset }) {
+export default function Home({ name, progress, go, reset, openLesson }) {
   const { srs, stats, tickets } = progress
   const all = counts(ALL_ITEMS, srs)
   const cards = counts(CARDS, srs)
   const quiz = counts(QUESTIONS, srs)
   const accuracy = stats.answered ? Math.round((stats.correct / stats.answered) * 100) : 0
   const ticketsDone = Object.keys(tickets).length
+  const lessonsDone = Object.keys(progress.lessons || {}).length
 
   return (
     <div className="stack">
@@ -24,6 +25,7 @@ export default function Home({ name, progress, go, reset }) {
       </section>
 
       <section className="modes">
+        <Mode title="Mācības" desc="Īsi soļi ar uzdevumiem un mini laboratorijām. Sāc šeit, ja tēma ir jauna." note={`${lessonsDone}/18 pabeigtas`} onClick={() => go('learn')} />
         <Mode title="Viktorīna" desc="NetAcad stila jautājumi ar vienu vai vairākām pareizām atbildēm." due={quiz.due} fresh={quiz.fresh} onClick={() => go('quiz')} />
         <Mode title="Kartītes" desc="Porti, PDU, slāņi, IOS režīmi, adreses. Pagriez un novērtē sevi." due={cards.due} fresh={cards.fresh} onClick={() => go('cards')} />
         <Mode title="Biļetes" desc="Izlozē eksāmena biļeti un runā 5 minūtes ar plānu un faktu sarakstu." onClick={() => go('tickets')} />
@@ -47,6 +49,7 @@ export default function Home({ name, progress, go, reset }) {
                 </div>
                 <div className="bar"><div style={{ width: `${Math.round(c.mastery * 100)}%` }} /></div>
                 <div className="topic-actions">
+                  {t.id > 0 && <button onClick={() => openLesson(t.id)}>Mācība</button>}
                   <button onClick={() => go('quiz', [t.id])}>Viktorīna</button>
                   <button onClick={() => go('cards', [t.id])}>Kartītes</button>
                 </div>
@@ -74,11 +77,12 @@ function Stat({ label, value }) {
   )
 }
 
-function Mode({ title, desc, due, fresh, onClick }) {
+function Mode({ title, desc, due, fresh, note, onClick }) {
   return (
     <button className="mode card" onClick={onClick}>
       <h3>{title}</h3>
       <p className="muted">{desc}</p>
+      {note && <div className="pills"><span className="pill ok">{note}</span></div>}
       {due !== undefined && (
         <div className="pills">
           <span className="pill warn">{due} jāatkārto</span>
