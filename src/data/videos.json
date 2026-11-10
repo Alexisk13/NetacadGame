@@ -1,0 +1,36 @@
+{
+  "playlist": {
+    "id": "PLIhvC56v63IJVXv0GJcl9vO5Z6znCVb1P",
+    "title": "FREE CCNA 200-301 // Complete Course",
+    "author": "NetworkChuck"
+  },
+  "videos": {
+    "CRdL1PcherM": { "title": "what is TCP/IP and OSI? // FREE CCNA // EP 3", "author": "NetworkChuck" },
+    "P7WfY9P2uNY": { "title": "Why Are Wires Twisted? Twisted Pair Explained", "author": "Audio University" },
+    "E3DEJ7odWq0": { "title": "fiber optic cables (what you NEED to know) // FREE CCNA // EP 13", "author": "NetworkChuck" },
+    "Uz-RTurph3c": { "title": "Wireless Networking Explained | Cisco CCNA 200-301", "author": "CertBros" },
+    "FFDMzbrEXaE": { "title": "Number Systems Introduction: Decimal, Binary, Octal & Hexadecimal", "author": "The Organic Chemistry Tutor" },
+    "HLziLmaYsO0": { "title": "What is Ethernet?", "author": "RealPars" },
+    "5WfiTHiU4x8": { "title": "what is an IP Address? // You SUCK at Subnetting // EP 1", "author": "NetworkChuck" },
+    "aor29pGhlFE": { "title": "Internet Protocol: IPv4 vs IPv6 as Fast As Possible", "author": "Techquickie" },
+    "4I2AZ1by_sY": { "title": "Every Network Protocol Explained in 18 Minutes", "author": "Explainer Chris" },
+    "xeAe7kyejiI": { "title": "TCP/IP Model: PDUs and Encapsulation & Decapsulation", "author": "David Bombal Tech" },
+    "NiQTs9DbtW4": { "title": "What is DNS? (and how it makes the Internet work)", "author": "NetworkChuck" }
+  },
+  "tickets": {
+    "1": ["CRdL1PcherM", "xeAe7kyejiI"],
+    "2": ["P7WfY9P2uNY"],
+    "3": ["E3DEJ7odWq0"],
+    "4": ["Uz-RTurph3c"],
+    "5": ["FFDMzbrEXaE"],
+    "6": ["HLziLmaYsO0"],
+    "8": ["5WfiTHiU4x8", "aor29pGhlFE"],
+    "9": ["aor29pGhlFE"],
+    "11": ["4I2AZ1by_sY"],
+    "12": ["4I2AZ1by_sY"],
+    "13": ["4I2AZ1by_sY"],
+    "14": ["xeAe7kyejiI", "CRdL1PcherM"],
+    "15": ["NiQTs9DbtW4"],
+    "16": ["NiQTs9DbtW4", "4I2AZ1by_sY"]
+  }
+}

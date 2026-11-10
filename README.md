@@ -24,7 +24,8 @@ Without a `.env` the app runs in **local mode** (no login, progress in this brow
 
 All questions are in `src/data/`:
 - `tickets.json`: 18 tickets with main idea, required facts, 5-part speech plan, follow-up questions and related tickets. Generated from `EKSAMENA_BILETES.md` (the source of truth for the oral exam).
-- `lessons.json`: `{ t, steps: [...] }` per ticket. Step kinds: `info` (h, t, b bullets, tbl rows, tip), `mcq` (q, o, a index, e), `order` (q, items in correct order), `match` (q, pairs), `sort` (q, buckets, items [text, bucket]), `flow` (h, actors, steps {f, to, m, n}), `widget` (w: binary, subnet, ipv6, encap, mactable, cli).
+- `videos.json`: YouTube playlist plus video ids per ticket (first = main video). Players load only after a click, via youtube-nocookie.com.
+- `lessons.json`: `{ t, steps: [...] }` per ticket. Step kinds: `info` (h, t, b bullets, tbl rows, tip), `life` (real-life comparison: h, t, map [life, network] pairs), `mcq` (q, o, a index, e), `order` (q, items in correct order), `match` (q, pairs), `sort` (q, buckets, items [text, bucket]), `flow` (h, actors, steps {f, to, m, n}), `widget` (w: binary, subnet, ipv6, encap, mactable, cli).
 - `flashcards.json`: `{ id, t, q, a }`, `t` = ticket number (0 = ITN 1 basics).
 - `quiz.json`: `{ id, t, q, o: [options], a: [correct indexes], e: explanation }`. More than one index = "choose N". Options are shuffled in the game.
 

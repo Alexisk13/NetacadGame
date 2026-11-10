@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { tickets, LESSONS } from '../lib/data'
-import { InfoStep, McqStep, OrderStep, MatchStep, SortStep, FlowStep } from './steps'
+import { InfoStep, LifeStep, McqStep, OrderStep, MatchStep, SortStep, FlowStep } from './steps'
+import { Video, TicketVideos, ticketVideos, playlist } from './Video'
 import { BinaryWidget, SubnetWidget, Ipv6Widget, EncapWidget, MacTableWidget } from './widgets'
 import Cli from './Cli'
 
-const STEP = { info: InfoStep, mcq: McqStep, order: OrderStep, match: MatchStep, sort: SortStep, flow: FlowStep }
+const STEP = { info: InfoStep, life: LifeStep, mcq: McqStep, order: OrderStep, match: MatchStep, sort: SortStep, flow: FlowStep }
 const WIDGET = { binary: BinaryWidget, subnet: SubnetWidget, ipv6: Ipv6Widget, encap: EncapWidget, mactable: MacTableWidget }
 const CliStep = ({ step, onResult }) => (
   <div>
@@ -15,7 +16,7 @@ const CliStep = ({ step, onResult }) => (
 )
 WIDGET.cli = CliStep
 
-const graded = (step) => step.k !== 'info'
+const graded = (step) => step.k !== 'info' && step.k !== 'life'
 const starsFor = (ratio) => (ratio >= 0.9 ? 3 : ratio >= 0.7 ? 2 : 1)
 const Stars = ({ n = 0 }) => (
   <span className="stars" aria-label={`${n} no 3 zvaigznēm`}>
@@ -83,6 +84,12 @@ export default function Learn({ progress, update, go, openLesson, setOpenLesson 
         </div>
       </button>
 
+      <section className="card">
+        <h2>Video kurss</h2>
+        <p className="muted small">Pilns bezmaksas CCNA kurss angliski. Labi skatīties pirms vai pēc mācības, lai redzētu, kā tas izskatās īstās iekārtās.</p>
+        <Video list={playlist.id} title={playlist.title} author={playlist.author} />
+      </section>
+
       <div className="lesson-grid">
         {tickets.map((t) => {
           const l = lessons[t.id]
@@ -91,7 +98,7 @@ export default function Learn({ progress, update, go, openLesson, setOpenLesson 
             <button key={t.id} className={`lesson-tile ${l ? 'done' : ''} ${t.id === nextId ? 'next' : ''}`} onClick={() => setOpenLesson(t.id)}>
               <div className="lesson-top">
                 <span className="num">{t.id}</span>
-                <Stars n={l?.stars} />
+                <span>{ticketVideos(t.id).length > 0 && <span className="video-badge" title="Ir video">▶</span>} <Stars n={l?.stars} /></span>
               </div>
               <span className="ttl">{t.title}</span>
               <small className="muted">{steps} soļi{l ? `, iziets ${l.n}x` : ''}</small>
@@ -110,6 +117,7 @@ function Player({ t, lesson, best, onExit, onFinish, openOther, go }) {
   const [answered, setAnswered] = useState(false)
   const [first, setFirst] = useState({})
   const [finished, setFinished] = useState(null)
+  const [showVideo, setShowVideo] = useState(false)
 
   const idx = queue[pos]
   const step = lesson.steps[idx]
@@ -138,7 +146,8 @@ function Player({ t, lesson, best, onExit, onFinish, openOther, go }) {
   if (finished) return <LessonEnd t={t} result={finished} best={best} onExit={onExit} openOther={openOther} go={go} />
 
   const Comp = step.k === 'widget' ? WIDGET[step.w] : STEP[step.k]
-  const isInfo = step.k === 'info'
+  const isInfo = step.k === 'info' || step.k === 'life'
+  const hasVideo = ticketVideos(t.id).length > 0
 
   return (
     <div className="stack">
@@ -147,8 +156,10 @@ function Player({ t, lesson, best, onExit, onFinish, openOther, go }) {
         <div className="bar thin"><div style={{ width: `${(pos / queue.length) * 100}%` }} /></div>
         <span className="muted">{pos + 1}/{queue.length}</span>
         <div className="topic-tag">{t.id}. {t.title}{retry ? ' · atkārtojums' : ''}</div>
+        {hasVideo && <button className="link video-toggle" onClick={() => setShowVideo(!showVideo)}>{showVideo ? 'Paslēpt video' : '▶ Video par tēmu'}</button>}
       </div>
-      <section className={`card lesson-step ${isInfo ? 'is-info' : ''}`}>
+      {showVideo && <section className="card"><TicketVideos ticketId={t.id} /></section>}
+      <section className={`card lesson-step ${isInfo ? 'is-info' : ''} ${step.k === 'life' ? 'is-life' : ''}`}>
         <Comp key={pos} step={step} onResult={onResult} />
         {(isInfo || answered) && (
           <div className="row end">
@@ -184,6 +195,10 @@ function LessonEnd({ t, result, best, onExit, openOther, go }) {
         <p className="idea">{t.idea}</p>
         <h2>Fakti, kas jāpasaka runā</h2>
         <ul className="bullets">{t.facts.map((f) => <li key={f}>{f}</li>)}</ul>
+      </section>
+      <section className="card">
+        <h2>Noskaties, kā tas strādā dzīvē</h2>
+        <TicketVideos ticketId={t.id} />
       </section>
       {t.links.length > 0 && (
         <section className="card">

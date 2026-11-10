@@ -2,7 +2,7 @@ import { TOPICS, CARDS, QUESTIONS, ALL_ITEMS } from '../lib/data'
 import { counts } from '../lib/srs'
 import { streak } from '../lib/store'
 
-export default function Home({ name, progress, go, reset, openLesson }) {
+export default function Home({ name, progress, go, reset, openLesson, changePassword }) {
   const { srs, stats, tickets } = progress
   const all = counts(ALL_ITEMS, srs)
   const cards = counts(CARDS, srs)
@@ -60,6 +60,7 @@ export default function Home({ name, progress, go, reset, openLesson }) {
       </section>
 
       <p className="center">
+        {changePassword && <button className="link" onClick={changePassword}>Mainīt paroli</button>}
         <button className="link danger" onClick={() => { if (confirm('Dzēst visu savu progresu? To nevar atsaukt.')) reset() }}>
           Dzēst manu progresu
         </button>

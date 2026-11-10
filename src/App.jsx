@@ -87,7 +87,6 @@ function Game({ user }) {
         <div className="who">
           <span className={`dot ${sync}`} title={SYNC_LABEL[sync]} />
           <span className="muted">{name}</span>
-          {hasBackend && <button className="link" onClick={() => setChangingPassword(true)}>Mainīt paroli</button>}
           {hasBackend && <button className="link" onClick={logout}>Iziet</button>}
         </div>
       </header>
@@ -95,7 +94,7 @@ function Game({ user }) {
         <div className="banner">Lokālais režīms: progress tiek glabāts tikai šajā pārlūkā. Konti darbojas, kad ir iestatīts Supabase.</div>
       )}
       <main>
-        {screen === 'home' && <Home name={name} progress={progress} go={go} reset={reset} openLesson={(id) => { go('learn'); setOpenLesson(id) }} />}
+        {screen === 'home' && <Home name={name} progress={progress} go={go} reset={reset} changePassword={hasBackend ? () => setChangingPassword(true) : null} openLesson={(id) => { go('learn'); setOpenLesson(id) }} />}
         {screen === 'learn' && <Learn progress={progress} update={update} go={go} openLesson={openLesson} setOpenLesson={setOpenLesson} />}
         {screen === 'quiz' && <Study key={`q${preset}`} mode="quiz" progress={progress} update={update} preset={preset} />}
         {screen === 'cards' && <Study key={`c${preset}`} mode="cards" progress={progress} update={update} preset={preset} />}

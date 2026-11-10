@@ -22,7 +22,7 @@ try {
   const cli = await load('/src/components/Cli.jsx')
 
   // 1. Every lesson step renders without throwing.
-  const STEP = { info: steps.InfoStep, mcq: steps.McqStep, order: steps.OrderStep, match: steps.MatchStep, sort: steps.SortStep, flow: steps.FlowStep }
+  const STEP = { info: steps.InfoStep, life: steps.LifeStep, mcq: steps.McqStep, order: steps.OrderStep, match: steps.MatchStep, sort: steps.SortStep, flow: steps.FlowStep }
   const WIDGET = { binary: widgets.BinaryWidget, subnet: widgets.SubnetWidget, ipv6: widgets.Ipv6Widget, encap: widgets.EncapWidget, mactable: widgets.MacTableWidget, cli: cli.default }
   let rendered = 0
   for (const lesson of LESSONS) {

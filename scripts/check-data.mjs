@@ -38,6 +38,7 @@ for (const l of lessons) {
     const at = `lesson ${l.t} step ${i + 1} (${s.k})`
     const bad = (msg) => errors.push(`${at}: ${msg}`)
     if (s.k === 'info') { if (!s.h || !(s.t || s.b || s.tbl)) bad('needs h and content') }
+    else if (s.k === 'life') { if (!s.h || !s.t || (s.map && s.map.some((p) => p.length !== 2))) bad('needs h, t and [life, network] pairs') }
     else if (s.k === 'mcq') { if (!s.q || !(s.a >= 0 && s.a < s.o?.length) || new Set(s.o).size !== s.o.length) bad('bad options/answer') }
     else if (s.k === 'order') { if (!s.q || s.items?.length < 2 || new Set(s.items).size !== s.items.length) bad('items must be 2+ unique') }
     else if (s.k === 'match') { if (!s.q || s.pairs?.length < 2 || new Set(s.pairs.map((p) => p[1])).size !== s.pairs.length || new Set(s.pairs.map((p) => p[0])).size !== s.pairs.length) bad('pairs must be unique on both sides') }
@@ -48,7 +49,19 @@ for (const l of lessons) {
   })
 }
 
-for (const f of ['tickets.json', 'flashcards.json', 'quiz.json', 'lessons.json']) {
+// Videos: ticket keys exist, every referenced video has metadata, ids look like YouTube ids.
+const videos = load('videos.json')
+if (!/^PL[\w-]+$/.test(videos.playlist?.id ?? '')) errors.push('videos: bad playlist id')
+for (const [id, v] of Object.entries(videos.videos)) {
+  if (!/^[\w-]{11}$/.test(id)) errors.push(`videos: bad id ${id}`)
+  if (!v.title) errors.push(`videos: ${id} has no title`)
+}
+for (const [t, ids] of Object.entries(videos.tickets)) {
+  if (!tickets.some((x) => x.id === Number(t))) errors.push(`videos: unknown ticket ${t}`)
+  for (const id of ids) if (!videos.videos[id]) errors.push(`videos: ticket ${t} uses unknown video ${id}`)
+}
+
+for (const f of ['tickets.json', 'flashcards.json', 'quiz.json', 'lessons.json', 'videos.json']) {
   const text = readFileSync(new URL(`../src/data/${f}`, import.meta.url), 'utf8')
   text.split('\n').forEach((line, n) => { if (dash.test(line)) errors.push(`${f}:${n + 1}: em/en dash`) })
 }

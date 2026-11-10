@@ -33,6 +33,30 @@ export function InfoStep({ step }) {
   )
 }
 
+/** Real-life comparison card: everyday situation, optionally mapped to the network term. */
+export function LifeStep({ step }) {
+  return (
+    <div className="step-life">
+      <div className="life-tag">Kā dzīvē</div>
+      <h2>{step.h}</h2>
+      <p>{step.t}</p>
+      {step.map && (
+        <div className="life-map">
+          <div className="life-head">Dzīvē</div>
+          <div className="life-head">Tīklā</div>
+          {step.map.map(([a, b]) => (
+            <div className="life-pair" key={a}>
+              <span>{a}</span>
+              <span className="life-arrow">→</span>
+              <strong>{b}</strong>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function McqStep({ step, onResult }) {
   const order = useMemo(() => shuffle(step.o.map((_, i) => i)), [step])
   const [picked, setPicked] = useState(null)

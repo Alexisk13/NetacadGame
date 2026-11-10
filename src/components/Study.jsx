@@ -201,7 +201,7 @@ function QuizSession({ initial, extra, record, onDone, onExit }) {
             : <button className="primary" onClick={next}>Tālāk</button>}
         </div>
       </section>
-      <p className="muted small center">Taustiņi: 1-6 izvēlas, Enter pārbauda un iet tālāk.</p>
+      <p className="muted small center kbd-hint">Taustiņi: 1-6 izvēlas, Enter pārbauda un iet tālāk.</p>
     </div>
   )
 }

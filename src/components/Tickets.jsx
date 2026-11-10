@@ -133,6 +133,7 @@ function Speech({ t, onFinish, onExit }) {
             </div>
           ))}
         </div>
+        <div className="phase-now">{current < PHASES.length ? `${PHASES[current].label}: ${PHASES[current].tip}` : 'Laiks beidzies'}</div>
         <div className="row center-row">
           <button className="primary" onClick={() => setRunning(!running)} disabled={elapsed >= TOTAL}>
             {running ? 'Pauze' : elapsed > 0 ? 'Turpināt' : 'Sākt runu'}
